@@ -1,4 +1,4 @@
-﻿# wrap
+# wrap
 blog
 column == 栏目管理
 about == 关于我
