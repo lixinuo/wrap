@@ -6,5 +6,4 @@ configure == 网站配置
 note == 个人笔记
 user == 用户管理
 blog == 个人文章
-测试
 
