@@ -6,17 +6,29 @@
 <script type="text/javascript" src="js/common.js"></script>
 <title>测试</title>
 <style>
-.p{ position:relative; float:left; left:50%;}
-.c{ position:relative; float:left; right:50%;}
+.p{ position:relative; border:1px solid #ccc; height:400px; width:100%;}
+.c{ position:absolute;  border:1px solid red;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+width: 50%;
+height: 100px;
+margin: auto;}
 </style>
 </head>
 <body>
 <div id="sort">
 	<input type="text" id="sortValue" value="" />
 </div>
+
 <div class="p">
 	<h1 class="c">test</h1>
 </div>
+<ul>
+	<li onmouseover="javascript:alert(1);"><a>1</a></li>
+    <li><a>2</a></li>
+</ul>
 <script type="text/javascript">
 $(function(){
 	str = [12,2,5,45,63,1,5];
