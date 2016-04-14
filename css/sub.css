@@ -1,0 +1,154 @@
+.sub {
+    width: 1000px;
+    margin: 0 auto;
+}
+.sub_title {
+    height: 40px;
+    line-height: 40px;
+    margin: 5px 0;
+    border-bottom: #ccc 1px solid;
+}
+.sub_title a {
+    display: block;
+    float: left;
+    width: 100px;
+    text-align: center;
+    color: #fff;
+}
+.a1 {
+    background-color: #5EA51B;
+}
+.a2 {
+    background-color: #8BBF5D;
+}
+.sub_title span {
+    float: right;
+    color: #666;
+}
+/*上面title*/
+
+.about_main {
+    float: left;
+    width: 715px;
+    margin: 10px 0;
+    padding-right: 20px;
+    line-height: 22px;
+    background: url("../images/r_line.jpg") repeat-y right;
+    overflow: hidden;
+}
+.about_main h2 {
+    float: left;
+    width: 100%;
+    height: 22px;
+    margin-bottom: 20px;
+    color: #696969;
+}
+.about_main span {
+    float: left;
+    width: 100%;
+    line-height: 22px;
+    padding-bottom: 20px;
+    color: #696969;;
+}
+/*关于我页面左边说明*/
+
+.about_main_detail {
+    float: left;
+    width: 245px;
+    margin: 30px 5px 10px 15px;
+}
+.about_main_detail ul li {
+    height: 26px;
+    line-height: 26px;
+    color: #666;
+}
+.about_main_detail ul li span {
+    color: #19A566;
+}
+/*关于我页面右侧css样式*/
+
+.column_list li {
+    float: left;
+    width: 115px;
+    height: 30px;
+    line-height: 30px;
+    margin: 7px 5px;
+    text-align: center;
+}
+.column_list li a {
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #000;
+}
+.column_list li a:hover {
+    background-color: #e9783b;
+}
+/*栏目列表*/
+
+.note_list {
+    width: 100%;
+    margin: 15px auto;
+    background: url("../images/r_title_bg.jpg") repeat-y 790px 0;
+    overflow: hidden;
+}
+.note_box {
+    width: 720px;
+    margin: 20px 0;
+    position: relative;
+    padding: 20px 10px;
+    line-height: 24px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px 5px rgba(218, 218, 218, 0.8);
+    border-radius: 5px;
+    background-color: #fff;
+}
+.note_box span {
+    position: absolute;
+    left: 820px;
+    top: 20px;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #5EA51B;
+    border-radius: 0 40px;
+
+}
+.note_box:hover {
+    box-shadow: 0 0 10px 5px #BEBEBE;
+}
+
+
+
+/*note列表*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

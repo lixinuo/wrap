@@ -1,0 +1,109 @@
+<%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
+<!--#INCLUDE file="../../conn/conn.asp"-->
+<%
+Response.CharSet = "utf-8"
+Session.CodePage = "65001"
+title = request("title")
+id = isZero(request("id"),0)
+action = request("action")
+
+set rs = server.CreateObject("adodb.recordset")
+sql = "select * from [column] where id="&id&""
+rs.open sql,conn,1,1
+	if not rs.eof then
+		parentID = rs("id")
+		parentName = rs("name")
+	end if
+rs.close
+set rs = nothing
+
+if action = "del" then
+	conn.execute("delete from [column] where id = "&id&"")
+	msg "删除成功","columnList.asp?title="&title&""
+end if
+if action = "sort" then
+	sortID = request("sortID")
+	conn.execute("update [column] set sort = "&sortID&" where id = "&id&"")
+	response.Redirect(request.ServerVariables("HTTP_REFERER"))
+end if
+%>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" type="text/css" href="../../bootstrap-3.3.5/css/bootstrap.min.css" />
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script type="text/javascript" src="../../bootstrap-3.3.5/js/jquery-1.11.3.min.js" ></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script type="text/javascript" src="../../bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
+<title><%=title%></title>
+</head>
+
+<body>
+<div class="lead">
+    <ol class="breadcrumb">
+        <li class="active"><%=title%></li>
+        <input type="button" value="返回" class="btn btn-primary pull-right" onClick="javascript:history.go(-1);">
+    </ol>
+    <p class="label label-info">栏目总数：<span class="badge"><%=conn.execute("select count(*) from [column] where parentID = "&id&"")(0)%></span></p>
+    <a href="#"><span class="glyphicon glyphicon-trash label label-danger pull-right">批量删除</span></a>
+    <a href="column.asp?title=<%=title%>&action=add&parentID=<%=id%>"><span class="glyphicon glyphicon-plus label label-success pull-right" style="margin-right:10px;">添加</span></a>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <td width="10%"><div class="checkbox" style="margin:0;"><label><input type="checkbox">全选</label></div></td>
+            <td>栏目名称</td>
+            <td>创建日期</td>
+            <td width="10%">排序</td>
+            <td width="10%">编辑</td>
+            <td width="10%">删除</td>
+        </tr>
+    </thead>
+    <tbody>
+        <%
+        set rs = server.CreateObject("adodb.recordset")
+        sql = "select * from [column] where parentID="&id&" order by sort asc,id asc"
+        rs.open sql,conn,1,1
+        if not rs.eof then
+            do while not rs.eof
+        %>
+        <tr>
+            <td><input type="checkbox"></td>
+            <td><a href="columnList.asp?title=<%=rs("name")%>&id=<%=rs("id")%>"><%=rs("name")%></a></td>
+            <td><%=rs("setTime")%></td>
+            <td><input type="text" id="sort" onBlur="location='?title=<%=title%>&id=<%=rs("id")%>&action=sort&sortID=' + this.value" class="form-control input-sm" value="<%=rs("sort")%>" style="width:60px;"></td>
+            <td><a href="column.asp?title=<%=title%>&id=<%=rs("id")%>&action=edit"><span class="glyphicon glyphicon-pencil"></span><a></td>
+            <td><a onClick="return del()" href="?title=<%=title%>&id=<%=rs("id")%>&action=del"><span class="glyphicon glyphicon-trash"></span><a></td> 
+        </tr>
+        <%  rs.movenext
+            loop
+        else
+            response.Write "<td colspan='6'>&nbsp;暂无栏目！</td>"
+        end if
+        rs.close
+        set rs = nothing
+        %>
+        <tr>
+            <td colspan="6">
+                 <div class="text-center">
+                    <ul class="pagination">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">上一页</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">...</a></li>
+                        <li><a href="#">下一页</a></li>
+                        <li><a href="#">尾页</a></li>
+                    </ul>
+                 </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
