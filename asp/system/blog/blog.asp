@@ -4,20 +4,35 @@
 Response.CharSet = "utf-8"
 Session.CodePage = "65001"
 title = request("title")
-detail = request.Form("detail")
 id = isZero(request("id"),0)
 action = request("action")
 actionto = request("actionto")
 
 if actionto = "edit" or actionto = "add" then
+	blogTitle = request.Form("blogTitle")
+	author = request.Form("author")
+	upTime = request.Form("upTime")
+	categories = request.Form("categories")
+	inputFile = request.Form("inputFile")
+	detail = request.Form("detail")	
+	
 	set rs = server.CreateObject("adodb.recordset")
-	sql = "select * from [note] where id = "&id&""
+	sql = "select * from [blog] where id = "&id&""
 	rs.open sql,conn,1,3
 	if rs.eof then
 		rs.addnew
-		rs("setTime") = datemate(now())
+		rs("blogTitle") = blogTitle
+		rs("author") = author
+		rs("upTime") = upTime
+		rs("categories") = categories
+		rs("inputFile") = inputFile
 		rs("detail") = getStr(detail)
 	else
+		rs("blogTitle") = blogTitle
+		rs("author") = author
+		rs("upTime") = upTime
+		rs("categories") = categories
+		rs("inputFile") = inputFile
 		rs("detail") = getStr(detail)
 	end if
 	rs.update
@@ -27,10 +42,15 @@ if actionto = "edit" or actionto = "add" then
 end if
 
 set rs = server.CreateObject("adodb.recordset")
-sql = "select * from [note] where id = "&id&""
+sql = "select * from [blog] where id = "&id&""
 rs.open sql,conn,1,1
 if not rs.eof then
-	detail = (rs("detail"))
+	blogTitle = rs("blogTitle")
+	author = rs("author")
+	upTime = rs("upTime")
+	categories = rs("categories")
+	inputFile = rs("inputFile")
+	detail = rs("detail")
 else
 	detail = ""
 end if
@@ -47,9 +67,12 @@ set rs =nothing
 <script type="text/javascript" src="../../bootstrap-3.3.5/js/jquery-1.11.3.min.js" ></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script type="text/javascript" src="../../bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../bootstrap-3.3.5/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="../../bootstrap-3.3.5/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="../../js/choseTime.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
 <title><%=title%></title>
 </head>
-
 <body>
 <form class="form-horizontal" role="form" method="post" action="">
     <input type="hidden" id="actionto" name="actionto" value="<%=action%>">
@@ -63,9 +86,31 @@ set rs =nothing
                 <div class="panel-body">
                 	<div class="input-group">
                         <span class="input-group-addon" >标题：</span>
-                        <input type="text" class="form-control" required id="blogTilte" name="blogTilte" value="<%=blogTilte%>">
+                        <input type="text" class="form-control" required id="blogTitle" name="blogTitle" value="<%=blogTitle%>">
                     </div><br>
-                    <textarea class="form-control" rows="6" required id="detail" name="detail"><%=getFxStr(detail)%></textarea>
+                    <div class="input-group">
+                        <span class="input-group-addon" >作者：</span>
+                        <input type="text" class="form-control" required id="author" name="author" value="<%=author%>">
+                    </div><br>
+                    <div class="input-group">
+                        <span class="input-group-addon" >时间：</span>
+                        <input type="text" class="form-control" required readonly id="upTime" name="upTime" value="<%if upTime="" then response.Write datemate(now()) else response.Write upTime%>">
+                    </div><br>
+                    <div class="input-group">
+                    	<span class="input-group-addon">分类：</span>
+                    	<select class="form-control" id="categories" name="categories">
+                        	<option>CSS/HTML</option>
+                            <option>JavaScript</option>
+                            <option>Jquery</option>
+                            <option>Asp</option>
+                            <option>其他</option>
+                        </select>
+                    </div><br>
+                    <div class="input-group">
+                        <span class="input-group-addon" >文件：</span>
+                        <input type="file" class="form-control" id="inputFile" name="inputFile">
+                    </div><br>
+                    <textarea class="form-control" rows="10" required id="detail" name="detail"><%=getFxStr(detail)%></textarea>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-1">

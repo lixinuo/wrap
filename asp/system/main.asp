@@ -49,7 +49,7 @@ action = request("action")
                     <div class="form-group">
                         <input type="text" required class="form-control" placeholder="搜索">
                     </div>
-                    <input type="submit" class="btn btn-default" value="提交<%=session("login")%>">
+                    <input type="submit" class="btn btn-default" value="提交">
                 </form>
             </div>
         </div>

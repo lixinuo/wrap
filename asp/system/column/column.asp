@@ -4,26 +4,27 @@
 Response.CharSet = "utf-8"
 Session.CodePage = "65001"
 title = request("title")
-inputName = trim(request.Form("inputName"))
-linkURL = trim(request.Form("linkURL"))
 parentID = isZero(request("parentID"),0)
 id = isZero(request("id"),0)
 action = request("action")
 actionto = request("actionto")
 
 if actionto = "add" or actionto = "edit" then
+	inputName = trim(request.Form("inputName"))
+	linkURL = trim(request.Form("linkURL"))
+	detail = trim(request.Form("detail"))
+	
 	set rs = server.CreateObject("adodb.recordset")
 	sql = "select * from [column] where id = "&id&""
 	rs.open sql,conn,1,3
 		if actionto = "add" then
 			rs.addnew
-		end if
-		rs("name") = inputName
-		rs("linkURL") = linkURL
-		if actionto = "add" then
 			rs("parentID") = parentID
 			rs("setTime") = now()
 		end if
+		rs("name") = inputName
+		rs("linkURL") = linkURL
+		rs("detail") = getStr(detail)
 	rs.update
 	rs.close
 	set rs = nothing
@@ -35,6 +36,7 @@ if  action = "edit" then
 	rs.open sql,conn,1,1
 		inputName = rs("name")
 		linkURL = rs("linkURL")
+		detail = rs("detail")
 	rs.close
 	set rs =nothing
 end if
@@ -68,9 +70,15 @@ end if
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-sm-2">链接地址</label>
+        <label class="control-label col-sm-2">链接</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" id="linkURL" name="linkURL" value="<%=linkURL%>">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">说明</label>
+        <div class="col-sm-6">
+        	<textarea class="form-control" rows="4" id="detail" name="detail"><%=getFxStr(detail)%></textarea>
         </div>
     </div>
     <div class="form-group">

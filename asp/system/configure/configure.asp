@@ -84,11 +84,11 @@ set rs =nothing
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script type="text/javascript" src="../../bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../bootstrap-3.3.5/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="../../bootstrap-3.3.5/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script type="text/javascript" src="../../bootstrap-3.3.5/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="../../js/choseTime.js"></script>
+<script type="text/javascript" src="../../js/public.js"></script>
 <title><%=title%></title>
 </head>
-
 <body>
 <form class="form-horizontal" role="form" method="post" action="">
     <input type="hidden" id="actionto" name="actionto" value="<%=action%>">
@@ -149,7 +149,7 @@ set rs =nothing
                         </tr>
                         <tr>
                             <td style="height:34px; line-height:34px;">上线时间：</td>
-                            <td><input type="text"  class="form-control" required readonly id="datetimepicker" name="upTime" value="<%=datemate(upTime)%>"></td>
+                            <td><input type="text"  class="form-control" required readonly id="upTime" name="upTime" value="<%=datemate(upTime)%>"></td>
                         </tr>
                         <tr>
                             <td style="height:34px; line-height:34px;">版本号：</td>
@@ -176,20 +176,9 @@ set rs =nothing
     </div>
 </form>
 <script type="text/javascript">
-$("#datetimepicker").datetimepicker({
-	format : "yyyy-mm-dd",
-	weekStart : 0,		//一周开始的日期
-	autoclose : 1,		//选择时间后是否关闭
-	todayBtn : 1,		//是否有当天日期按钮
-	language : 'zh-CN',
-	minView : 'month'
-});
-
 function toggleVersion(){
 	$("#moreVersion").toggle("slow");
-	
 }
-
 </script>
 </body>
 </html>

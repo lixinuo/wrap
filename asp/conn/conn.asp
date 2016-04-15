@@ -14,6 +14,7 @@ else
 	sql_databasename = "lixinBlog"
 	sql_username = "sa"
 	sql_password = "11111111"
+	'sql_password = "aA123456"
 	connstr = "Provider = Sqloledb; User ID = " & sql_username & "; Password = " & sql_password & "; Initial Catalog = " & sql_databasename & "; Data Source = " & sql_localname & ";"
 	Set conn=Server.CreateObject("ADODB.connection")
 	conn.open connstr

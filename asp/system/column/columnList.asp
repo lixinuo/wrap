@@ -44,17 +44,16 @@ end if
 <body>
 <div class="lead">
     <ol class="breadcrumb">
-        <li class="active"><%=title%></li>
-        <input type="button" value="返回" class="btn btn-primary pull-right" onClick="javascript:history.go(-1);">
+        <li class="active"><p class="label label-info"><%=title%>&nbsp;<span class="badge"><%=conn.execute("select count(*) from [column] where parentID = "&id&"")(0)%></span></p></li>
+        <input type="button" value="返回" class="btn btn-primary btn-sm pull-right" onClick="javascript:history.go(-1);">
+        <input type="button" value="新增" class="btn btn-success btn-sm pull-right" style="margin:0 10px" onClick="location='column.asp?title=<%=title%>&action=add&parentID=<%=id%>'">
     </ol>
-    <p class="label label-info">栏目总数：<span class="badge"><%=conn.execute("select count(*) from [column] where parentID = "&id&"")(0)%></span></p>
-    <a href="#"><span class="glyphicon glyphicon-trash label label-danger pull-right">批量删除</span></a>
-    <a href="column.asp?title=<%=title%>&action=add&parentID=<%=id%>"><span class="glyphicon glyphicon-plus label label-success pull-right" style="margin-right:10px;">添加</span></a>
+    
+    <a href="column.asp?title=<%=title%>&action=add&parentID=<%=id%>"><span class="glyphicon glyphicon-plus label label-success pull-right">添加</span></a>
 </div>
 <table class="table table-striped table-bordered table-hover">
     <thead>
         <tr>
-            <td width="10%"><div class="checkbox" style="margin:0;"><label><input type="checkbox">全选</label></div></td>
             <td>栏目名称</td>
             <td>创建日期</td>
             <td width="10%">排序</td>
@@ -71,10 +70,9 @@ end if
             do while not rs.eof
         %>
         <tr>
-            <td><input type="checkbox"></td>
             <td><a href="columnList.asp?title=<%=rs("name")%>&id=<%=rs("id")%>"><%=rs("name")%></a></td>
             <td><%=rs("setTime")%></td>
-            <td><input type="text" id="sort" onBlur="location='?title=<%=title%>&id=<%=rs("id")%>&action=sort&sortID=' + this.value" class="form-control input-sm" value="<%=rs("sort")%>" style="width:60px;"></td>
+            <td><input type="text" id="sort" onBlur="location='?title=<%=title%>&id=<%=rs("id")%>&action=sort&sortID=' + this.value" class="input-sm" value="<%=rs("sort")%>" style="width:60px;"></td>
             <td><a href="column.asp?title=<%=title%>&id=<%=rs("id")%>&action=edit"><span class="glyphicon glyphicon-pencil"></span><a></td>
             <td><a onClick="return del()" href="?title=<%=title%>&id=<%=rs("id")%>&action=del"><span class="glyphicon glyphicon-trash"></span><a></td> 
         </tr>
