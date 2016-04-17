@@ -72,7 +72,7 @@ end if
         <tr>
             <td><a href="columnList.asp?title=<%=rs("name")%>&id=<%=rs("id")%>"><%=rs("name")%></a></td>
             <td><%=rs("setTime")%></td>
-            <td><input type="text" id="sort" onBlur="location='?title=<%=title%>&id=<%=rs("id")%>&action=sort&sortID=' + this.value" class="input-sm" value="<%=rs("sort")%>" style="width:60px;"></td>
+            <td><input type="text" id="sort" onBlur="location='?id=<%=rs("id")%>&action=sort&sortID=' + this.value" class="input-sm" value="<%=rs("sort")%>" style="width:60px;"></td>
             <td><a href="column.asp?title=<%=title%>&id=<%=rs("id")%>&action=edit"><span class="glyphicon glyphicon-pencil"></span><a></td>
             <td><a onClick="return del()" href="?title=<%=title%>&id=<%=rs("id")%>&action=del"><span class="glyphicon glyphicon-trash"></span><a></td> 
         </tr>

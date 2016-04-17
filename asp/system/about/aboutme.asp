@@ -4,20 +4,35 @@
 Response.CharSet = "utf-8"
 Session.CodePage = "65001"
 title = request("title")
-detail = request.Form("detail")
-id = isZero(request("id"),0)
 action = request("action")
-actionto = request("actionto")
 
-if actionto = "edit" then
+if action = "edit" then
+	netName = request.Form("netName")
+	fullName = request.Form("fullName")
+	root = request.Form("root")
+	living = request.Form("living")
+	job = request.Form("job")
+	detail = request.Form("detail")
+	
 	set rs = server.CreateObject("adodb.recordset")
 	sql = "select * from [aboutme]"
 	rs.open sql,conn,1,3
 	if rs.eof then
 		rs.addnew
 		rs("setTime") = now()
+		rs("netName") = netName
+		rs("fullName") = fullName
+		rs("root") = root
+		rs("living") = living
+		rs("job") = job
 		rs("detail") = getStr(detail)
 	else
+		rs("netName") = netName
+		rs("fullName") = fullName
+		rs("root") = root
+		rs("living") = living
+		rs("job") = job
+		rs("detail") = getStr(detail)
 		rs("detail") = getStr(detail)
 	end if
 	rs.update
@@ -30,9 +45,12 @@ set rs = server.CreateObject("adodb.recordset")
 sql = "select * from [aboutme]"
 rs.open sql,conn,1,1
 if not rs.eof then
+	netName = rs("netName")
+	fullName = rs("fullName")
+	root = rs("root")
+	living = rs("living")
+	job = rs("job")
 	detail = (rs("detail"))
-else
-	detail = ""
 end if
 rs.close
 set rs =nothing
@@ -53,7 +71,7 @@ set rs =nothing
 
 <body>
 <form class="form-horizontal" role="form" method="post" action="">
-    <input type="hidden" id="actionto" name="actionto" value="<%=action%>">
+	<input type="hidden" id="action" name="action" value="edit">
     <div class="form-group">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -62,19 +80,34 @@ set rs =nothing
                     <input type="button" value="返回" class="btn btn-primary btn-sm pull-right" onClick="javascript:history.go(-1);">
                 </div>
                 <div class="panel-body">
-                    <%if action <> "edit" then%>
-                        <p><%=detail%></p>
-                    <%else%>
-                        <textarea class="form-control" rows="10" id="detail" name="detail"><%=getFxStr(detail)%></textarea>
-                    <%end if%>
+                    <div class="input-group">
+                    	<div class="input-group-addon">网名：</div>
+                    	<input type="text" class="form-control" required id="netName" name="netName" value="<%=netName%>" >
+                    </div><br>
+                    <div class="input-group">
+                    	<div class="input-group-addon">姓名：</div>
+                    	<input type="text" class="form-control" required id="fullName" name="fullName" value="<%=fullName%>" >
+                    </div><br>
+                    <div class="input-group">
+                    	<div class="input-group-addon">籍贯：</div>
+                    	<input type="text" class="form-control" required id="root" name="root" value="<%=root%>" >
+                    </div><br>
+                    <div class="input-group">
+                    	<div class="input-group-addon">现居：</div>
+                    	<input type="text" class="form-control" required id="living" name="living" value="<%=living%>" >
+                    </div><br>
+                    <div class="input-group">
+                    	<div class="input-group-addon">职业：</div>
+                        <input type="text" class="form-control" required id="job" name="job" value="<%=job%>" >
+                    </div><br>
+                    <div class="input-group">
+                    	<div class="input-group-addon">说明：</div>
+                    	<textarea class="form-control" rows="10" id="detail" name="detail"><%=getFxStr(detail)%></textarea>
+                    </div><br>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-1">
-                    <%if action <> "edit" then%>
-                        <input type="button" onClick="location='?action=edit&title=<%=title%>'" class="btn btn-default" value="编辑">
-                    <%else%>
                         <input type="submit" class="btn btn-default" value="提交">
-                    <%end if%>
                     </div>
                 </div>
             </div>
