@@ -8,7 +8,7 @@ userName = trim(request.Form("userName"))
 userPwd = md5(md5(trim(request.Form("userPwd"))))
 checkCode = trim(request.Form("checkCode"))
 
-if session("validateCode") <> checkCode then msg "验证码错误！","../login.asp"
+if session("validateCode") <> checkCode then msg "验证码错误！","../index.asp"
 
 set rs = server.CreateObject("adodb.recordset")
 sql = "select id,name,password from [user] where name = '"&userName&"'"
@@ -25,7 +25,7 @@ if not rs.eof then
 		response.Redirect("../system/main.asp")
 	end if
 else
-	msg "无此用户!","../login.asp"
+	msg "无此用户!","../index.asp"
 end if
 rs.close
 set rs = nothing
