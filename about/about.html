@@ -63,10 +63,7 @@
     </div>
     <div class="about_main">
         <h2>Just about me</h2>
-        <span>
-            &nbsp;&nbsp;&nbsp;&nbsp;lixin，男，一个90后程序猿！13年入行，从业已经有二年。大学专业通信工程，先后学过C、C#、.NET等编程语言，但是在大学中所学几乎都是基础，真正能用到工作中的少之又少。<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;本博客以简约为核心而设计，16年3月底开始编写，16年4月第一个版本正式上线，建立此站的目的在于，记录自己工作中的种种问题，以及与志同道合的朋友们一起学习，一起交流，一起进步。希望这个平台的搭建能够让我结识更多编程上的同行者。
-        </span>
+        <span id="selfDetail"></span>
         <h2>About My Website</h2>
         <span>
             域名：www.lixin_nuo.com&nbsp;&nbsp;创建于2016-03-27
@@ -83,11 +80,11 @@
     </div>
     <div class="about_main_detail">
         <ul>
-            <li>网名：<span>、诺</span></li>
-            <li>姓名：<span>lixin</span></li>
-            <li>籍贯：<span>湖南省-邵东县</span></li>
-            <li>现居：<span>深圳市-龙岗区</span></li>
-            <li>职业：<span>网页开发工程师</span></li>
+            <li>网名：<span id="netName"></span></li>
+            <li>姓名：<span id="fullName"></span></li>
+            <li>籍贯：<span id="root"></span></li>
+            <li>现居：<span id="living"></span></li>
+            <li>职业：<span id="job"></span></li>
             <li>
                 <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=Zx8OCRIISQsOJxYWSQQICg" style="text-decoration:none;">
                     <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_22.png" alt="我的qq邮箱" title="我的qq邮箱"/>
@@ -114,4 +111,24 @@
     <div id="weiXin"></div>
 </div><!--右侧固定栏目结束-->
 </body>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : 'POST',
+		url : '../ajax/ajax.asp',
+		data : { pass : 'about'},
+		dataType : 'json',
+		success : function(data){
+			$("#netName").html(data.netName);
+			$("#fullName").html(data.fullName);
+			$("#root").html(data.root);
+			$("#living").html(data.living);
+			$("#job").html(data.job);
+			$("#selfDetail").html(data.selfDetail);
+			console.log(data);
+		}
+		
+	});
+});
+</script>
 </html>
