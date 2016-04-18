@@ -67,17 +67,18 @@ Wrap.rightBar = function(){
         $("html, body").animate({scrollTop: 0}, 500);
     });
     $("#weiXin").mouseover(function(){        //右侧微信图片事件
-        $(this).css({"background-image":"url(../../../HTML/wrap/images/weiXin2.png)"});
+        $(this).css({"background-image":"url(/wrap/images/weiXin2.png)"});
         $("#weiXin_pic").show();
     }).mouseout(function(){
         var weiXinPic = $("#weiXin_pic");
         weiXinPic.mouseover(function(){
+			$("#weiXin").css({"background-image":"url(/wrap/images/weiXin2.png)"});
             $(this).show();
         }).mouseout(function(){
-            //$("#weiXin").css({"background-image":"url(../../../HTML/wrap/images/weiXin1.png)"});
+			$("#weiXin").css({"background-image":"url(/wrap/images/weiXin1.png)"});
             $(this).hide();
         });
-        $(this).css({"background-image":"url(../../../HTML/wrap/images/weiXin1.png)"});
+        $(this).css({"background-image":"url(/wrap/images/weiXin1.png)"});
         weiXinPic.hide();
     });
 };
