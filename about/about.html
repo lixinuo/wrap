@@ -65,18 +65,10 @@
         <h2>Just about me</h2>
         <span id="selfDetail"></span>
         <h2>About My Website</h2>
-        <span>
-            域名：www.lixin_nuo.com&nbsp;&nbsp;创建于2016-03-27
-        </span>
-        <span>
-            服务器：XXX服务器
-        </span>
-        <span>
-            上线时间：XXX
-        </span>
-        <span>
-            当前版本：XXX
-        </span>
+        <span id="domain"></span>
+        <span id="servers"></span>
+        <span id="upTime"></span>
+        <span id="versions">当前版本：<a href="javascript:void(0)"></a></span>
     </div>
     <div class="about_main_detail">
         <ul>
@@ -125,6 +117,10 @@ $(function(){
 			$("#living").html(data.living);
 			$("#job").html(data.job);
 			$("#selfDetail").html(data.selfDetail);
+			$("#domain").html("域名： " + data.domain);
+			$("#servers").html("服务器： " + data.servers);
+			$("#upTime").html("上线时间： " + data.upTime);
+			$("#versions a").html(data.versions);
 			console.log(data);
 		}
 		
