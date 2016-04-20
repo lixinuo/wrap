@@ -65,6 +65,11 @@
 .about_main_detail ul li span {
     color: #19A566;
 }
+#moreVersion {
+	display: none;
+	float: left;
+	width: 100%;
+}
 /*关于我页面右侧css样式*/
 
 .column_list li {
@@ -91,7 +96,7 @@
 .note_list {
     width: 100%;
     margin: 15px auto;
-    background: url("../images/r_title_bg.jpg") repeat-y 790px 0;
+    /*background: url("../images/r_title_bg.jpg") repeat-y 790px 0;*/
     overflow: hidden;
 }
 .note_box {
@@ -125,7 +130,15 @@
 
 /*note列表*/
 
+.pagination {font-size: 16px;height: 32px;margin: 5px 10px; text-align:center}  
+.pagination a,.page-cur,.page-start,.page-end,.page-disabled,{height:22px;line-height:22px;margin:0;text-align:center;vertical-align:middle;white-space:nowrap;}  
+.pagination input {border-width: 1px;}  
+.page-start, .pagination a, .page-end, .page-disabled {border: 1px solid #CCCCCC;padding:5px;}  
+.pagination a {text-decoration: none; display:inline-block; width: 20px;}  
+.page-cur {background-color: #FFEDE1;border: 1px solid #FD6D01;color: #FD6D01;font-weight: 700;padding: 0 5px;}  
+.page-disabled {color: #CCCCCC; display:inline-block;} 
 
+/*列表样式*/
 
 
 

@@ -1,35 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
-<html xmlns="http://www.w3.org/1999/xhtml">  
-<head>  
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<title>ajax分页</title>  
-</head>  
-  
-<body>  
-<style>  
-.pagination {font-size: 16px;height: 32px;margin: 5px 10px; text-align:center}  
-.pagination a,.page-cur,.page-start,.page-end,.page-disabled,{height:22px;line-height:22px;margin:0;text-align:center;vertical-align:middle;white-space:nowrap;}  
-.pagination input {border-width: 1px;}  
-.page-start, .pagination a, .page-end, .page-disabled {border: 1px solid #CCCCCC;padding:5px;}  
-.pagination a {text-decoration: none; display:inline-block; width: 20px;}  
-.page-cur {background-color: #FFEDE1;border: 1px solid #FD6D01;color: #FD6D01;font-weight: 700;padding: 0 5px;}  
-.page-disabled {color: #CCCCCC; display:inline-block;}  
-</style>  
-<div id="pageNav"></div>  
-</body>  
-  
-</html>  
-<script>  
-testPage(2);  
-function testPage(curPage){  
-  
-        supage('pageNav','testPage','',curPage,100,5);  
-  
-}  
-  
-  
-/** 
- 
+ /** 
  * @param {String} divName 分页导航渲染到的dom对象ID 
  * @param {String} funName 点击页码需要执行后台查询数据的JS函数 
  * @param {Object} params 后台查询数据函数的参数，参数顺序就是该对象的顺序，当前页面一定要设置在里面的 
@@ -53,8 +22,7 @@ function supage(divId, funName, params, curPage, total, pageSize){
             else{  
                param_str += params[o] + ',';  
             }  
-        }  
-        //alert(111);  
+        }   
     }  
     //设置起始页码  
     if (totalPage > 5) {  
@@ -119,4 +87,3 @@ function supage(divId, funName, params, curPage, total, pageSize){
     //渲染到dom中  
     document.getElementById(divId).innerHTML = output;  
 };  
-</script>  

@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../css/sub.css"/>
     <script type="text/javascript" src="../lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/list.js"></script>
     <title>个人主页</title>
 </head>
 <body>
@@ -67,6 +68,7 @@
             <li class="note_box"><p>生活的坑都是自己挖的！譬如，听别人讲话，听到最后，耳朵里只会记住两类话：最愿意听的和最不愿意听的。然后，喜欢听的未必化成快乐，但不喜欢听的一定化成了痛苦，其他的都化成了风。</p><span>2016-04-02</span></li>
             <li class="note_box">123</li>
         </ul>
+        <div id="pageNav"></div>
     </div>
 </div><!--main结束-->
 <div class="footer">
@@ -85,4 +87,27 @@
     <div id="weiXin"></div>
 </div><!--右侧固定栏目结束-->
 </body>
+<script type="text/javascript">
+var listsize = 1;    //每页显示的记录数
+$(function(){
+	testPage(1);
+});
+function testPage(curPage){ 
+	$.ajax({
+		type : 'POST',
+		url : '../ajax/ajax.asp',
+		data : { pass : 'note', currPage : '"'+ curPage +'"', listsize : '"'+ listsize +'"', rs : Math.random()},
+		dataType : 'json',
+		error: function(e){
+			alert(e);	
+		},
+		success: function(data){
+			console.log(data);
+			
+			
+			supage('pageNav','testPage','',curPage,data.noteCount,listsize); 
+		}
+	}); 
+}
+</script>
 </html>
