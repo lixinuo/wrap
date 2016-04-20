@@ -109,7 +109,7 @@ $(function(){
 	$.ajax({
 		type : 'POST',
 		url : '../ajax/ajax.asp',
-		data : { pass : 'about'},
+		data : { pass : 'about', rd : Math.random()},
 		dataType : 'json',
 		success : function(data){
 			$("#netName").html(data.netName);
@@ -127,7 +127,8 @@ $(function(){
 				html = html + '<p><strong>版本号： ' + data.versions[i].versionss + '</strong></p>';
 				html = html + '<p>' + data.versions[i].details + '</p>';
 			}
-			$(html).appendTo("#moreVersion");
+			$($.parseHTML(html, document, true)).appendTo("#moreVersion"); 
+			//$(html).appendTo("#moreVersion");
 			//console.log(data);
 		}
 		

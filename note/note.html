@@ -64,10 +64,7 @@
         <span>点滴积累亦可积少成多。</span>
     </div>
     <div class="note_list">
-        <ul>
-            <li class="note_box"><p>生活的坑都是自己挖的！譬如，听别人讲话，听到最后，耳朵里只会记住两类话：最愿意听的和最不愿意听的。然后，喜欢听的未必化成快乐，但不喜欢听的一定化成了痛苦，其他的都化成了风。</p><span>2016-04-02</span></li>
-            <li class="note_box">123</li>
-        </ul>
+        <ul></ul>
         <div id="pageNav"></div>
     </div>
 </div><!--main结束-->
@@ -88,22 +85,28 @@
 </div><!--右侧固定栏目结束-->
 </body>
 <script type="text/javascript">
-var listsize = 1;    //每页显示的记录数
+var listsize = 10;    //每页显示的记录数
 $(function(){
 	testPage(1);
 });
-function testPage(curPage){ 
+function testPage(curPage){
+	$(".note_list ul").html(''); 
 	$.ajax({
 		type : 'POST',
 		url : '../ajax/ajax.asp',
-		data : { pass : 'note', currPage : '"'+ curPage +'"', listsize : '"'+ listsize +'"', rs : Math.random()},
+		data : { pass : 'note', curPage : ''+ curPage +'', listsize : ''+ listsize +'', rd : Math.random()},
 		dataType : 'json',
 		error: function(e){
 			alert(e);	
 		},
 		success: function(data){
 			console.log(data);
-			
+			var html = '';
+			for (var i=data.detail.length-1; i>=0 ;i--){
+				html += '<li class="note_box"><p>' + data.detail[i].details + '</p><span>' +  data.detail[i].setTimes + '</span></li>'
+			}
+			//$(html).appendTo(".note_list ul") jq1.8以后不兼容
+			$($.parseHTML(html, document, true)).appendTo(".note_list ul"); 
 			
 			supage('pageNav','testPage','',curPage,data.noteCount,listsize); 
 		}

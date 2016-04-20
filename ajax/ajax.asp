@@ -60,24 +60,46 @@ if pass = "about" then
 	response.Write json
 end if
 
+'ajax获取个人笔记列表信息
 if pass = "note" then 
-	currPage = 1'request("currPage")  '当前页面 1
-	listsize = 1'request("listsize")	'每页显示的记录数  1
-	noteCount = conn.execute("select count(*) from [note]")(0)
+	curPage = request("curPage")  '当前页面 
+	listSize = request("listSize")	'每页显示的记录数
+	noteCount = conn.execute("select count(*) from [note]")(0)  '获取总的笔记数量
+	preNum = curPage*listSize   '已结显示过的数量
+	if noteCount<preNum then
+		listSize = noteCount - (curPage-1)*listSize
+	end if
+	
 	json = "{"
 	set rs = server.CreateObject("adodb.recordset")
-	sql = "select top "& listsize &" * from (select top "& currPage*listsize &" * from [note] order by id asc)top_1 order by id desc"
+	sql = "select top "&listSize&" * from (select top "&curPage*listSize&" * from [note] order by id desc)top_1 order by id asc"
 	rs.open sql,conn,1,1
 	if not rs.eof then
-		detail = rs("detail")
+		i=0
+		dim details,setTimes
+		do while not rs.eof 
+			if i=0 then
+				redim details(i+1),setTimes(i+1)
+			else
+				redim preserve details(i+1),setTimes(i+1)
+			end if
+			details(i) = rs("detail")
+			setTimes(i) = rs("setTime")
+			i = i+1
+		rs.movenext
+		loop
 	end if
 	rs.close
 	set rs=nothing	
 	
-	json = json&"""noteCount"":""" & noteCount & """"
+	json = json&"""noteCount"":""" & noteCount & ""","
+	json = json&"""detail"":["
+	for j=0 to ubound(details)-1
+		json = json&"{""details"":""" & details(j) & """,""setTimes"":""" & setTimes(j) & """},"
+	next
+	json = left(json,len(json)-1)  '去掉最后一个，
 	
-	
-	json = json&"}"
+	json = json&"]}"
 	response.Write json
 end if
 

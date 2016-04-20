@@ -61,7 +61,7 @@ end if
                         <tbody>
                         <%
                         set rs = server.CreateObject("adodb.recordset")
-                        sql = "select * from [note] order by setTime asc,id desc"
+                        sql = "select * from [note] order by setTime desc,id desc"
                         rs.open sql,conn,1,1
                         if not rs.eof then
                             do while not rs.eof
