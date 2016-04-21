@@ -65,7 +65,7 @@ if pass = "note" then
 	curPage = request("curPage")  '当前页面 
 	listSize = request("listSize")	'每页显示的记录数
 	noteCount = conn.execute("select count(*) from [note]")(0)  '获取总的笔记数量
-	preNum = curPage*listSize   '已结显示过的数量
+	preNum = curPage*listSize   '已经显示过的数量
 	if noteCount<preNum then
 		listSize = noteCount - (curPage-1)*listSize
 	end if
@@ -100,6 +100,48 @@ if pass = "note" then
 	json = left(json,len(json)-1)  '去掉最后一个，
 	
 	json = json&"]}"
+	response.Write json
+end if
+
+if pass = "life" then
+	curPage = request("curPage")  '当前页面 
+	listSize = request("listSize")	'每页显示的记录数
+	blogCount = conn.execute("select count(*) from [blog],[blogtype] where [blog].categories=[blogtype].name and [blogtype].supplement='生活'")(0)  '获取总的blog数量
+	preNum = curPage*listSize   '已经显示过的数量
+	if blogCount<preNum then
+		listSize = blogCount - (curPage-1)*listSize
+	end if
+	
+	json = "{"
+'	set rs = server.CreateObject("adodb.recordset")
+'	sql = "select top "&listSize&" * from (select top "&curPage*listSize&" * from [note] order by id desc)top_1 order by id asc"
+'	rs.open sql,conn,1,1
+'	if not rs.eof then
+'		i=0
+'		dim details,setTimes
+'		do while not rs.eof 
+'			if i=0 then
+'				redim details(i+1),setTimes(i+1)
+'			else
+'				redim preserve details(i+1),setTimes(i+1)
+'			end if
+'			details(i) = rs("detail")
+'			setTimes(i) = rs("setTime")
+'			i = i+1
+'		rs.movenext
+'		loop
+'	end if
+'	rs.close
+'	set rs=nothing	
+	
+	json = json&"""blogCount"":""" & blogCount & """"
+	'json = json&"""detail"":["
+'	for j=0 to ubound(details)-1
+'		json = json&"{""details"":""" & details(j) & """,""setTimes"":""" & setTimes(j) & """},"
+'	next
+'	json = left(json,len(json)-1)  '去掉最后一个，
+	
+	json = json&"}"
 	response.Write json
 end if
 
