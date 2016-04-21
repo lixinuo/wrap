@@ -19,6 +19,21 @@ else
 	conn.open connstr
 end if
 
+
+'建立文件夹函数
+Function CreateFolder(strFolder)'参数为相对路径
+	'首选判断要建立的文件夹是否已经存在
+	Dim strTestFolder,objFSO
+	strTestFolder = Server.Mappath(strFolder)
+	Set objFSO = CreateObject("Scripting.FileSystemObject")
+	'检查文件夹是否存在
+	If not objFSO.FolderExists(strTestFolder) Then
+	'如果不存在则建立文件夹
+	objFSO.CreateFolder(strTestFolder)
+	End If
+	Set objFSO = Nothing
+End function
+
 '处理时间
 function datemate(gettime)
 	if gettime<>"" then

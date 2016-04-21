@@ -33,6 +33,7 @@ end if
 <meta charset="utf-8">
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" type="text/css" href="../../bootstrap-3.3.5/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../bootstrap-3.3.5/css/bootstrap-theme.min.css">
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script type="text/javascript" src="../../bootstrap-3.3.5/js/jquery-1.11.3.min.js" ></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -44,12 +45,10 @@ end if
 <body>
 <div class="lead">
     <ol class="breadcrumb">
-        <li class="active"><p class="label label-info"><%=title%>&nbsp;<span class="badge"><%=conn.execute("select count(*) from [column] where parentID = "&id&"")(0)%></span></p></li>
+        <li class="active"><p class="label label-info"><%=title%>&nbsp;<span class="badge" id="countNum"><%=conn.execute("select count(*) from [column] where parentID = "&id&"")(0)%></span></p></li>
         <input type="button" value="返回" class="btn btn-primary btn-sm pull-right" onClick="javascript:history.go(-1);">
         <input type="button" value="新增" class="btn btn-success btn-sm pull-right" style="margin:0 10px" onClick="location='column.asp?title=<%=title%>&action=add&parentID=<%=id%>'">
     </ol>
-    
-    <a href="column.asp?title=<%=title%>&action=add&parentID=<%=id%>"><span class="glyphicon glyphicon-plus label label-success pull-right">添加</span></a>
 </div>
 <table class="table table-striped table-bordered table-hover">
     <thead>
@@ -86,22 +85,19 @@ end if
         %>
         <tr>
             <td colspan="6">
-                 <div class="text-center">
-                    <ul class="pagination">
-                        <li><a href="#">首页</a></li>
-                        <li><a href="#">上一页</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">...</a></li>
-                        <li><a href="#">下一页</a></li>
-                        <li><a href="#">尾页</a></li>
-                    </ul>
-                 </div>
+                 <div id="pageNav" class="text-center"></div>
             </td>
         </tr>
     </tbody>
 </table>
 </body>
+<script type="text/javascript">
+var listsize = 10;    //每页显示的记录数
+$(function(){
+	testPage(1);
+});
+function testPage(curPage){
+	supage('pageNav','testPage','',curPage,$('#countNum').html(),listsize);
+}
+</script>
 </html>

@@ -13,7 +13,7 @@ if actionto = "edit" or actionto = "add" then
 	author = request.Form("author")
 	upTime = request.Form("upTime")
 	categories = request.Form("categories")
-	inputFile = request.Form("inputFile")
+	'inputFile = request.Form("inputFile")
 	detail = request.Form("detail")	
 	
 	set rs = server.CreateObject("adodb.recordset")
@@ -25,14 +25,14 @@ if actionto = "edit" or actionto = "add" then
 		rs("author") = author
 		rs("upTime") = upTime
 		rs("categories") = categories
-		rs("inputFile") = inputFile
+		'rs("inputFile") = inputFile
 		rs("detail") = getStr(detail)
 	else
 		rs("blogTitle") = blogTitle
 		rs("author") = author
 		rs("upTime") = upTime
 		rs("categories") = categories
-		rs("inputFile") = inputFile
+		'rs("inputFile") = inputFile
 		rs("detail") = getStr(detail)
 	end if
 	rs.update
@@ -56,6 +56,8 @@ else
 end if
 rs.close
 set rs =nothing
+
+
 %>
 <!doctype html>
 <html>
@@ -99,17 +101,23 @@ set rs =nothing
                     <div class="input-group">
                     	<span class="input-group-addon">分类：</span>
                     	<select class="form-control" id="categories" name="categories">
-                        	<option>CSS/HTML</option>
-                            <option>JavaScript</option>
-                            <option>Jquery</option>
-                            <option>Asp</option>
-                            <option>其他</option>
+                        <%  set rs = server.CreateObject("adodb.recordset")
+							sql = "select name from blogtype where show =1 order by sort asc, id asc"
+							rs.open sql,conn,1,1
+							do while not rs.eof 
+						%>
+                        	<option value="<%=rs("name")%>"><%=rs("name")%></option>
+                        <%	rs.movenext
+							loop
+							rs.close
+							set rs = nothing
+						%>
                         </select>
                     </div><br>
-                    <div class="input-group">
+                    <!--<div class="input-group">
                         <span class="input-group-addon" >文件：</span>
-                        <input type="file" class="form-control" id="inputFile" name="inputFile">
-                    </div><br>
+                        <input type="file" class="form-control" multiple id="inputFile" name="inputFile">
+                    </div><br>-->
                     <textarea class="form-control" rows="10" required id="detail" name="detail"><%=getFxStr(detail)%></textarea>
                 </div>
                 <div class="form-group">
