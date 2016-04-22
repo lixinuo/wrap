@@ -63,39 +63,14 @@
         <a href="life.html" class="a2">生活</a>
         <span>这些曾经或现在，出现在我生命中的人，现在以及以后，或许在，或许不在，但是谢谢，你们给予我的那些温暖。</span>
     </div>
-    <div class="content left">
-        <div class="content_main left">
-            <h3 class="content_title new"><a href="#">【活动作品】柠檬绿兔小白个人博客模板</a></h3>
-            <div class="content_image">
-                <img src="../images/content1.png" alt=""/>
-            </div>
-            <div class="content_detail">
-                <p>展示的是首页html，博客页面布局格式简单，没有复杂的背景，色彩局部点缀，动态的幻灯片展示，切换卡，标签云...此作品设计图作者窦耀宇</p>
-                <a title="【活动作品】柠檬绿兔小白个人博客模板" href="#" target="_blank" class="read_more right">阅读全文>></a>
-            </div>
-            <div class="content_time left">
-                <span>2016-03-23</span>
-                <span>作者：李欣</span>
-                <span>个人博客：[<a href="#">原创个人模板</a>]</span>
-                <span>阅览：[1]</span>
-            </div>
-        </div>
-        <div id="pageNav"></div>
-    </div>
-
+    <div class="content left"></div>
     <div class="content_list right">
         <div class="news">
             <h3 class="ranking"><p>栏目<span>列表</span></p></h3>
-            <ul class="column_list">
-                <li><a href="#">杂谈</a></li>
-                <li><a href="#">日记</a></li>
-                <li><a href="#">心路</a></li>
-                <li><a href="#">程序人生</a></li>
-                <li><a href="#">经典语录</a></li>
-            </ul>
+            <ul class="column_list"></ul>
         </div>
         <p class="height20"></p>
-        <div class="news">
+       <!-- <div class="news">
             <h3 class="ranking"><p>文章<span>排行</span></p></h3>
             <ul class="ranking_list">
                 <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
@@ -104,17 +79,13 @@
                 <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
                 <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
             </ul>
-        </div>
+        </div>-->
         <div class="news">
             <h3 class="links"><p>友情<span>链接</span></p></h3>
-            <ul class="website_list">
-                <li><a href="#" target="_blank">云盘资料</a></li>
-                <li><a href="http://www.5icool.org/" target="_blank">Jquery特效</a></li>
-                <li><a href="http://www.yangqq.com/" target="_blank">杨青个人博客</a></li>
-            </ul>
+            <ul class="website_list"></ul>
         </div>
     </div>
-
+	<div id="pageNav" style="float:left; width:735px;"></div>
 </div><!--main结束-->
 <div class="footer">
     <div class="footer_box">
@@ -133,27 +104,68 @@
 </div><!--右侧固定栏目结束-->
 </body>
 <script type="text/javascript">
-var listsize = 10;    //每页显示的记录数
+var listsize = 6;    //每页显示的记录数
 $(function(){
+	firstLoad();
 	testPage(1);
 });
 function testPage(curPage){
-	//$(".content_main").html(''); 
+	$(".content").html(''); 
 	$.ajax({
 		type : 'POST',
 		url : '../ajax/ajax.asp',
-		data : { pass : 'life', curPage : ''+ curPage +'', listsize : ''+ listsize +'', rd : Math.random()},
+		data : { pass : 'blog', curPage : ''+ curPage +'', listsize : ''+ listsize +'', passtype : '生活', rd : Math.random()},
 		dataType : 'json',
 		error: function(e){
 			alert(e);	
 		},
 		success: function(data){
-			console.log(data);
+			var html = '';
 			if(data.blogCount == 0){
 				html = '<p>' + '暂无文章' + '</p>'
-				$(html).appendTo($(".content_main"));
+				//$(html).appendTo($(".content_main"));   jq1.8以后不兼容
+				$($.parseHTML(html, document, true)).appendTo(".content"); 
 			}else{
+				for (var i=data.detail.length-1; i>=0; i--){
+					html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';
+					html += '<div class="content_image"></div>';
+					html += '<div class="content_detail"><p>' + data.detail[i].detail + '</p></div>';
+					html += '<div class="content_time left"><span>' + data.detail[i].upTime + '</span>';
+					html += '<span>作者：' + data.detail[i].author + '</span>';
+					html += '<span>个人博客：' + data.detail[i].categories + '</span>';
+					html += '<span>阅览：[1]</span></div>';
+					html += '</div>';
+				}
+				$($.parseHTML(html, document, true)).appendTo(".content");
 				supage('pageNav','testPage','',curPage,data.blogCount,listsize); 
+			}
+		}
+	}); 
+}
+
+function firstLoad(){
+	$.ajax({
+		type : 'POST',
+		url : '../ajax/ajax.asp',
+		data : { pass : 'blog', passtype : '生活', rightCon : '1', rd : Math.random()},
+		dataType : 'json',
+		error: function(e){
+			alert(e);	
+		},
+		success: function(data){
+			var typeHtml = '';
+			if(data.blogtypes.length){
+				for (var i=0; i<data.blogtypes.length; i++){
+					typeHtml += '<li><a href="#">' + data.blogtypes[i].name + '</a></li>'
+				}
+				$($.parseHTML(typeHtml, document, true)).appendTo(".column_list");
+			}
+			var linkHtml = '';
+			if (data.friendlinks.length){
+				for (var i=0; i<data.friendlinks.length; i++){
+					linkHtml += '<li><a target="_blank" href="'+ data.friendlinks[i].linkurl +'">' + data.friendlinks[i].linkname	+ '</a></li>'
+				}
+				$($.parseHTML(linkHtml, document, true)).appendTo(".website_list");
 			}
 		}
 	}); 

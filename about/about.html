@@ -118,9 +118,9 @@ $(function(){
 			$("#living").html(data.living);
 			$("#job").html(data.job);
 			$("#selfDetail").html(data.selfDetail);
-			$("#domain").html("域名： " + data.domain);
-			$("#servers").html("服务器： " + data.servers);
-			$("#upTime").html("上线时间： " + data.upTime);
+			$("#domain").html("域名： " + data.versions[0].domain);
+			$("#servers").html("服务器： " + data.versions[0].servers);
+			$("#upTime").html("上线时间： " + data.versions[0].upTime);
 			$("#versions a").html(" " + data.versions[0].versionss + "(点击查看更多版本信息）");
 			var html = '<div style="border-bottom:1px solid #ccc"></div>'
 			for(var i=0 ; i<data.versions.length ; i++){

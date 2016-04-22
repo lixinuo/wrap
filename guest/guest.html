@@ -68,11 +68,11 @@
 
     <div class="about_main_detail">
         <ul>
-            <li>网名：<span>、诺</span></li>
-            <li>姓名：<span>lixin</span></li>
-            <li>籍贯：<span>湖南省-邵东县</span></li>
-            <li>现居：<span>深圳市-龙岗区</span></li>
-            <li>职业：<span>网页开发工程师</span></li>
+            <li>网名：<span id="netName"></span></li>
+            <li>姓名：<span id="fullName"></span></li>
+            <li>籍贯：<span id="root"></span></li>
+            <li>现居：<span id="living"></span></li>
+            <li>职业：<span id="job"></span></li>
             <li>
                 <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=Zx8OCRIISQsOJxYWSQQICg" style="text-decoration:none;">
                     <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_22.png" alt="我的qq邮箱" title="我的qq邮箱"/>
@@ -99,4 +99,29 @@
     <div id="weiXin"></div>
 </div><!--右侧固定栏目结束-->
 </body>
+<script type="text/javascript">
+$(function(){
+	firstLoad();	
+});
+function firstLoad(){
+	$.ajax({
+		type : 'POST',
+		url : '../ajax/ajax.asp',
+		data : { pass : 'guest', rd : Math.random()},
+		dataType : 'json',
+		error: function(e){
+			alert(e);	
+		},
+		success: function(data){
+			console.log(data);
+			$("#netName").html(data.netName);
+			$("#fullName").html(data.fullName);
+			$("#root").html(data.root);
+			$("#living").html(data.living);
+			$("#job").html(data.job);
+		}
+	}); 
+}
+
+</script>
 </html>
