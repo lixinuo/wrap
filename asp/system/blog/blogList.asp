@@ -61,13 +61,13 @@ end if
                         <tbody>
                         <%
                         set rs = server.CreateObject("adodb.recordset")
-                        sql = "select * from [blog] order by upTime asc,id desc"
+                        sql = "select * from [blog] order by upTime desc,id desc"
                         rs.open sql,conn,1,1
                         if not rs.eof then
                             do while not rs.eof
                             %>
                                 <tr>
-                                    <td title="<%=rs("blogTitle")%>"><%if len(rs("blogTitle"))>20 then response.Write left(rs("blogTitle"),20)&"..." else response.Write rs("blogTitle")%></td>
+                                    <td title="<%=rs("blogTitle")%>"><%=rs("blogTitle")&"&nbsp;&nbsp;("&rs("categories")&")"%></td>
                                     <td><%=rs("upTime")%></td>
                                     <td><a href="?title=<%=title%>&action=show&id=<%=rs("id")%>&showList=<%=rs("show")%>" id="showList"><%if rs("show")=1 then response.Write "显示" else response.Write "隐藏"%></a></td>
                                     <td><a href="blog.asp?title=<%=title%>&id=<%=rs("id")%>&action=edit"><span class="glyphicon glyphicon-pencil"></span></a></td>

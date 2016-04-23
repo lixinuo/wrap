@@ -71,40 +71,6 @@
 <div class="main">
     <h2 class="main_title"><p>文章<span>推荐</span></p></h2>
     <div class="content left">
-        <div class="content_main left">
-            <h3 class="content_title new"><a href="#">【活动作品】柠檬绿兔小白个人博客模板</a></h3>
-            <div class="content_image">
-                <img src="images/content1.png" alt=""/>
-            </div>
-            <div class="content_detail">
-                <p>展示的是首页html，博客页面布局格式简单，没有复杂的背景，色彩局部点缀，动态的幻灯片展示，切换卡，标签云...此作品设计图作者窦耀宇</p>
-                <a title="【活动作品】柠檬绿兔小白个人博客模板" href="#" target="_blank" class="read_more right">阅读全文>></a>
-            </div>
-            <div class="content_time left">
-                <span>2016-03-23</span>
-                <span>作者：李欣</span>
-                <span>个人博客：[<a href="#">原创个人模板</a>]</span>
-                <span>阅览：[1]</span>
-            </div>
-        </div>
-
-        <div class="content_main left">
-            <h3 class="content_title"><a href="#">【活动作品】柠檬绿兔小白个人博客模板</a></h3>
-            <div class="content_image">
-                <img src="images/content1.png" alt=""/>
-            </div>
-            <div class="content_detail">
-                <p>展示的是首页html，博客页面布局格式简单，没有复杂的背景，色彩局部点缀，动态的幻灯片展示，切换卡，标签云...此作品设计图作者窦耀宇</p>
-                <a title="【活动作品】柠檬绿兔小白个人博客模板" href="#" target="_blank" class="read_more right">阅读全文>></a>
-            </div>
-            <div class="content_time left">
-                <span>2016-03-23</span>
-                <span>作者：李欣</span>
-                <span>个人博客：[<a href="#">原创个人模板</a>]</span>
-                <span>阅览：[1]</span>
-            </div>
-        </div>
-
     </div>
 
     <div class="content_list right">
@@ -113,22 +79,11 @@
         </div>
         <div class="news">
             <h3 class="ranking"><p>文章<span>排行</span></p></h3>
-            <ul class="ranking_list">
-                <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
-                <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
-                <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
-                <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
-                <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
-            </ul>
+            <ul class="ranking_list"></ul>
         </div>
         <div class="news">
             <h3 class="links"><p>友情<span>链接</span></p></h3>
-            <ul class="website_list">
-                <li><a href="#" target="_blank">云盘资料</a></li>
-                <li><a href="http://www.5icool.org/" target="_blank">Jquery特效</a></li>
-                <li><a href="http://www.yangqq.com/" target="_blank">杨青个人博客</a></li>
-                <li><a href="http://www.myadc.cn/My/index" target="_blank">许金奎博客</a></li>
-            </ul>
+            <ul class="website_list"></ul>
         </div>
     </div>
 
@@ -149,4 +104,62 @@
     <div id="weiXin"></div>
 </div><!--右侧固定栏目结束-->
 </body>
+<script type="text/javascript">
+var maxShow = 5, maxShowList = 10;
+$(function(){
+	$.ajax({
+		type : 'POST',
+		url : 'ajax/ajax.asp',
+		data : { pass : 'index', rd : Math.random()},
+		dataType : 'json',
+		error: function(e){
+			alert(e);	
+		},
+		success: function(data){
+			//左侧列表
+			var html = '';
+			//排行列表
+			var rankHtml = '';
+			if(data.blogCount == 0){
+				html = '<p>' + '暂无文章' + '</p>';
+				rankHtml = html;
+				//$(html).appendTo($(".content_main"));   jq1.8以后不兼容
+				$($.parseHTML(html, document, true)).appendTo(".content"); 
+			}else{
+				maxShow = (maxShow>data.detail.length)?data.detail.length:maxShow
+				for (var i=0; i<maxShow; i++){
+					if(Wrap.compareTime(data.detail[i].upTime, new Date(), 7)){
+						html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';
+					}else{
+						html += '<div class="content_main left">' + '<h3 class="content_title"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';	
+					}
+					html += '<div class="content_image"></div>';
+					html += '<div class="content_detail"><p>' + data.detail[i].detail + '</p></div>';
+					html += '<div class="content_time left"><span>' + data.detail[i].upTime + '</span>';
+					html += '<span>作者：' + data.detail[i].author + '</span>';
+					html += '<span>个人博客：' + data.detail[i].categories + '</span>';
+					html += '<span>阅览：[1]</span></div>';
+					html += '</div>';
+				}
+				$($.parseHTML(html, document, true)).appendTo(".content");
+				
+				maxShowList = (maxShowList>data.detail.length)?data.detail.length:maxShowList
+				for (var i=0; i<maxShowList; i++){
+					rankHtml += '<li><a target="_blank" href="#">' + data.detail[i].blogTitle	+ '</a></li>'
+				}
+				$($.parseHTML(rankHtml, document, true)).appendTo(".ranking_list");
+			}
+
+			//友情链接
+			var linkHtml = '';
+			if (data.friendlinks.length){
+				for (var i=0; i<data.friendlinks.length; i++){
+					linkHtml += '<li><a target="_blank" href="'+ data.friendlinks[i].linkurl +'">' + data.friendlinks[i].linkname	+ '</a></li>'
+				}
+				$($.parseHTML(linkHtml, document, true)).appendTo(".website_list");
+			}
+		}
+	});
+});
+</script>
 </html>

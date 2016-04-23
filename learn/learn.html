@@ -129,7 +129,11 @@ function testPage(curPage){
 				$($.parseHTML(html, document, true)).appendTo(".content"); 
 			}else{
 				for (var i=data.detail.length-1; i>=0; i--){
-					html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';
+					if(Wrap.compareTime(data.detail[i].upTime, new Date(), 7)){
+						html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';
+					}else{
+						html += '<div class="content_main left">' + '<h3 class="content_title"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';	
+					}
 					html += '<div class="content_image"></div>';
 					html += '<div class="content_detail"><p>' + data.detail[i].detail + '</p></div>';
 					html += '<div class="content_time left"><span>' + data.detail[i].upTime + '</span>';

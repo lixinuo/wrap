@@ -104,7 +104,15 @@ Wrap.quickSort = function(arr){
 	return Wrap.quickSort(left).concat([midValue],Wrap.quickSort(right));  //递归比较
 }
 
-
+//比较当前日期，返回bool值
+Wrap.compareTime = function(date1,date2,num){
+	if(!num){num=7}
+	var date1arr = date1.split("-");
+	var date1 = new Date(date1arr[0],date1arr[1]-1,(date1arr[2]));  //月份减1
+	date1.setDate(date1.getDate()+num);  //日期加上预设的天数，默认7天
+	console.log(date1 + '#' + date2 + "#" + (date1>date2) + num);
+	return date1>=date2;
+}
 
 
 

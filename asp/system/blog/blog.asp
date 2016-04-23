@@ -106,7 +106,7 @@ set rs =nothing
 							rs.open sql,conn,1,1
 							do while not rs.eof 
 						%>
-                        	<option value="<%=rs("name")%>"><%=rs("name")%></option>
+                        	<option value="<%=rs("name")%>" <%if rs("name")=categories then response.Write "selected"%>><%=rs("name")%></option>
                         <%	rs.movenext
 							loop
 							rs.close

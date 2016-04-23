@@ -4,6 +4,22 @@
 Response.CharSet = "utf-8"
 pass = request("pass")
 
+'ajax获取首页信息
+if pass = "index" then 
+	curPage = request("curPage")  '当前页面 
+	listSize = request("listSize")	'每页显示的记录数
+	noteCount = conn.execute("select count(*) from [blog] where show=1")(0)  '获取总的笔记数量
+
+	json = "{"
+	json = json&"""noteCount"":""" & noteCount & """"
+	call getFriendLink()
+	if noteCount<>0 then
+		call getBlogList()
+	end if
+	json = json&"}"
+	response.Write json
+end if
+
 '关于我页面ajax返回
 if pass = "about" then
 	json = "{"
@@ -71,6 +87,24 @@ if pass = "guest" then
 	'返回前台json数据
 	response.Write json
 end if
+
+'获取blog文章
+function getBlogList()
+	set rs = server.CreateObject("adodb.recordset")
+	sql = "select top 10 * from [blog] where show=1 order by upTime desc,id desc"
+	rs.open sql,conn,1,1
+	json = json&",""detail"":["
+	if not rs.eof then
+		do while not rs.eof 
+			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & rs("upTime") & """,""id"":""" & rs("id") & """},"
+		rs.movenext
+		loop
+		json = left(json,len(json)-1)  '去掉最后一个，
+	end if
+	json = json&"]"
+	rs.close
+	set rs=nothing	
+end function
 
 '获取blog文章
 function getBlog(preNum,listSize,passtype)
