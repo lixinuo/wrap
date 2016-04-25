@@ -1,8 +1,6 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <!--#INCLUDE file="../../conn/conn.asp"-->
 <%
-Response.CharSet = "utf-8"
-Session.CodePage = "65001"
 title = request("title")
 id = isZero(request("id"),0)
 action = request("action")
@@ -102,11 +100,11 @@ set rs =nothing
                     	<span class="input-group-addon">分类：</span>
                     	<select class="form-control" id="categories" name="categories">
                         <%  set rs = server.CreateObject("adodb.recordset")
-							sql = "select name from blogtype where show =1 order by sort asc, id asc"
+							sql = "select typename from blogtype where show =1 order by sort asc, id asc"
 							rs.open sql,conn,1,1
 							do while not rs.eof 
 						%>
-                        	<option value="<%=rs("name")%>" <%if rs("name")=categories then response.Write "selected"%>><%=rs("name")%></option>
+                        	<option value="<%=rs("typename")%>" <%if rs("typename")=categories then response.Write "selected"%>><%=rs("typename")%></option>
                         <%	rs.movenext
 							loop
 							rs.close

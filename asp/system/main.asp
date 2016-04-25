@@ -2,12 +2,9 @@
 <!--#INCLUDE file="../conn/conn.asp"-->
 <!--#INCLUDE file="../check/loginOut.asp"-->
 <%
-Response.CharSet = "utf-8"
-Session.CodePage = "65001"
 title = "后台管理"
 id = isZero(request("id"),0)
 action = request("action")
-
 %>
 <!doctype html>
 <html>
@@ -36,7 +33,7 @@ action = request("action")
 				rs.open sql,conn,1,1
 				do while not rs.eof
 				%>
-                	<li><a href="<%=rs("linkURL")%>"><%=rs("name")%></a></li>
+                	<li><a href="<%=rs("linkURL")%>"><%=rs("linkname")%></a></li>
                 <%
 				rs.movenext
 				loop
@@ -65,7 +62,7 @@ action = request("action")
             %>
             	<div class="panel-heading">
                 	<h4 class="panel-title">
-                    	<a data-toggle="collapse" href="#column<%=rs("id")%>"><%=rs("name")%></a>
+                    	<a data-toggle="collapse" href="#column<%=rs("id")%>"><%=rs("linkname")%></a>
                     </h4>
                 </div>
             <%
@@ -79,7 +76,7 @@ action = request("action")
                 	do while not rs1.eof
             %>
                 	<div class="panel-body">
-                    	<a href="javascript:void(0);" onClick="mainLink('<%=rs1("linkURL")&"?title="&rs1("name")%>')"><%=rs1("name")%></a>
+                    	<a href="javascript:void(0);" onClick="mainLink('<%=rs1("linkURL")&"?title="&rs1("linkname")%>')"><%=rs1("linkname")%></a>
                     </div>
             <%
 					rs1.movenext

@@ -2,8 +2,6 @@
 <!--#INCLUDE file="../../conn/conn.asp"-->
 <!--#include file="../../check/MD5.asp"-->
 <%
-Response.CharSet = "utf-8"
-Session.CodePage = "65001"
 title = request("title")
 userName = trim(request.Form("userName"))
 userPwd = md5(md5(trim(request.Form("userPwd"))))
@@ -17,12 +15,12 @@ if actionto = "edit" or actionto = "add" then
 	rs.open sql,conn,1,3
 	if rs.eof then
 		rs.addnew
-		rs("name") = userName
+		rs("username") = userName
 		rs("password") = userPwd
 		rs("setTime") = datemate(now())
 	else
 		if trim(request.Form("userPwd")) <> "" then
-			rs("name") = userName
+			rs("username") = userName
 			rs("password") = userPwd
 		end if
 	end if
@@ -36,7 +34,7 @@ set rs = server.CreateObject("adodb.recordset")
 sql = "select * from [user] where id = "&id&""
 rs.open sql,conn,1,1
 if not rs.eof then
-	userName = rs("name")
+	userName = rs("username")
 	userPwd = rs("password")
 else
 	userName = ""

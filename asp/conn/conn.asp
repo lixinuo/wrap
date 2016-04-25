@@ -1,12 +1,11 @@
-
 <%
-sqldata=1    '数据库类型，1为sql数据库，0为access数据库
+sqldata=0    '数据库类型，1为sql数据库，0为access数据库
 if sqldata=0 then
-	dbstr="/database/#%slzjiu#com.mdb"  'access数据库地址
+	dbstr="/asp/database/#%slzjiu#com.mdb"  'access数据库地址
 	Set conn = Server.CreateObject("ADODB.Connection")
 	DBPath = Server.MapPath(dbstr)
 	connstr="provider=microsoft.jet.oledb.4.0;data source=" &DBPath
-	conn.Open connstr
+	conn.Open connStr
 else
 'sql数据库连接参数：数据库名、用户密码、用户名、连接名（本地用local，外地用IP）
   Dim sql_databasename,sql_password,sql_username,sql_localname

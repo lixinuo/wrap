@@ -1,8 +1,6 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <!--#INCLUDE file="../../conn/conn.asp"-->
 <%
-Response.CharSet = "utf-8"
-Session.CodePage = "65001"
 title = request("title")
 id = isZero(request("id"),0)
 action = request("action")

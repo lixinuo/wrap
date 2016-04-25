@@ -1,8 +1,6 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <!--#INCLUDE file="../../conn/conn.asp"-->
 <%
-Response.CharSet = "utf-8"
-Session.CodePage = "65001"
 title = request("title")
 id = isZero(request("id"),0)
 action = request("action")
@@ -17,11 +15,11 @@ if actionto = "edit" or actionto = "add" then
 	rs.open sql,conn,1,3
 	if rs.eof then
 		rs.addnew
-		rs("name") = Uname
+		rs("typename") = Uname
 		rs("supplement") = supplement
 		rs("setTime") = datemate(now())
 	else
-		rs("name") = Uname
+		rs("typename") = Uname
 		rs("supplement") = supplement
 	end if
 	rs.update
@@ -34,7 +32,7 @@ set rs = server.CreateObject("adodb.recordset")
 sql = "select * from [blogtype] where id = "&id&""
 rs.open sql,conn,1,1
 if not rs.eof then
-	Uname = rs("name")
+	Uname = rs("typename")
 	supplement = rs("supplement")
 end if
 rs.close

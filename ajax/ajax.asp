@@ -56,7 +56,7 @@ if pass = "blog" then
 	listSize = request("listSize")	'每页显示的记录数
 	passtype = request("passtype")  '
 	rightCon = request("rightCon")
-	blogCount = conn.execute("select count(*) from [blog],[blogtype] where [blog].categories=[blogtype].name and [blog].show=1 and [blogtype].supplement='"&passtype&"'")(0)  '获取总的blog数量
+	blogCount = conn.execute("select count(*) from [blog],[blogtype] where [blog].categories=[blogtype].typename and [blog].show=1 and [blogtype].supplement='"&passtype&"'")(0)  '获取总的blog数量
 	preNum = curPage*listSize   '显示的数量
 	if blogCount<preNum then
 		listSize = blogCount - (curPage-1)*listSize
@@ -109,7 +109,7 @@ end function
 '获取blog文章
 function getBlog(preNum,listSize,passtype)
 	set rs = server.CreateObject("adodb.recordset")
-	sql = "select top "&listSize&" * from (select top "&preNum&" [blog].id,[blog].blogTitle,[blog].author,[blog].categories,[blog].detail,[blog].upTime from [blog],[blogtype] where [blog].categories=[blogtype].name and [blog].show=1 and [blogtype].supplement='"&passtype&"' order by [blog].id desc)top_1 order by [top_1].id asc"
+	sql = "select top "&listSize&" * from (select top "&preNum&" [blog].id,[blog].blogTitle,[blog].author,[blog].categories,[blog].detail,[blog].upTime from [blog],[blogtype] where [blog].categories=[blogtype].typename and [blog].show=1 and [blogtype].supplement='"&passtype&"' order by [blog].id desc)top_1 order by [top_1].id asc"
 	rs.open sql,conn,1,1
 	json = json&",""detail"":["
 	if not rs.eof then
@@ -127,12 +127,12 @@ end function
 '获取友情链接
 function getFriendLink()
 	set rs = server.CreateObject("adodb.recordset")
-	sql = "select name,url from link where show=1 order by sort asc,id asc"
+	sql = "select linkname,url from link where show=1 order by sort asc,id asc"
 	rs.open sql,conn,1,1
 	json = json&",""friendlinks"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""linkname"":""" &rs("name")& """,""linkurl"":""" & rs("url") & """},"
+			json = json&"{""linkname"":""" &rs("linkname")& """,""linkurl"":""" & rs("url") & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，
@@ -145,12 +145,12 @@ end function
 '获取blog类别
 function getBlogType(blogtype)
 	set rs = server.CreateObject("adodb.recordset")
-	sql = "select name from blogtype where show=1 and supplement = '"&blogtype&"'"
+	sql = "select typename from blogtype where show=1 and supplement = '"&blogtype&"'"
 	rs.open sql,conn,1,1
 	json = json&",""blogtypes"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""name"":""" &rs("name")& """},"
+			json = json&"{""name"":""" &rs("typename")& """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，

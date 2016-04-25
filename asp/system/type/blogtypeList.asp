@@ -1,8 +1,6 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <!--#INCLUDE file="../../conn/conn.asp"-->
 <%
-Response.CharSet = "utf-8"
-Session.CodePage = "65001"
 title = request("title")
 detail = request.Form("detail")
 id = isZero(request("id"),0)
@@ -68,7 +66,7 @@ end if
                             do while not rs.eof
                             %>
                                 <tr>
-                                    <td title="<%=rs("name")%>"><%=rs("name")%></td>
+                                    <td title="<%=rs("typename")%>"><%=rs("typename")%></td>
                                     <td title="<%=rs("supplement")%>"><%=rs("supplement")%></td>
                                     <td><%=rs("setTime")%></td>
                                     <td><a href="?action=show&title=<%=title%>&id=<%=rs("id")%>&showList=<%=rs("show")%>" id="showList"><%if rs("show")=1 then response.Write "显示" else response.Write "隐藏"%></a></td>

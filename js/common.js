@@ -67,18 +67,18 @@ Wrap.rightBar = function(){
         $("html, body").animate({scrollTop: 0}, 500);
     });
     $("#weiXin").mouseover(function(){        //右侧微信图片事件
-        $(this).css({"background-image":"url(/wrap/images/weiXin2.png)"});
+        $(this).css({"background-image":"url(/images/weiXin2.png)"});
         $("#weiXin_pic").show();
     }).mouseout(function(){
         var weiXinPic = $("#weiXin_pic");
         weiXinPic.mouseover(function(){
-			$("#weiXin").css({"background-image":"url(/wrap/images/weiXin2.png)"});
+			$("#weiXin").css({"background-image":"url(/images/weiXin2.png)"});
             $(this).show();
         }).mouseout(function(){
-			$("#weiXin").css({"background-image":"url(/wrap/images/weiXin1.png)"});
+			$("#weiXin").css({"background-image":"url(/images/weiXin1.png)"});
             $(this).hide();
         });
-        $(this).css({"background-image":"url(/wrap/images/weiXin1.png)"});
+        $(this).css({"background-image":"url(/images/weiXin1.png)"});
         weiXinPic.hide();
     });
 };
@@ -110,7 +110,6 @@ Wrap.compareTime = function(date1,date2,num){
 	var date1arr = date1.split("-");
 	var date1 = new Date(date1arr[0],date1arr[1]-1,(date1arr[2]));  //月份减1
 	date1.setDate(date1.getDate()+num);  //日期加上预设的天数，默认7天
-	console.log(date1 + '#' + date2 + "#" + (date1>date2) + num);
 	return date1>=date2;
 }
 

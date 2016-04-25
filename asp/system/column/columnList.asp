@@ -1,8 +1,6 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <!--#INCLUDE file="../../conn/conn.asp"-->
 <%
-Response.CharSet = "utf-8"
-Session.CodePage = "65001"
 title = request("title")
 id = isZero(request("id"),0)
 action = request("action")
@@ -12,7 +10,7 @@ sql = "select * from [column] where id="&id&""
 rs.open sql,conn,1,1
 	if not rs.eof then
 		parentID = rs("id")
-		parentName = rs("name")
+		parentName = rs("linkname")
 	end if
 rs.close
 set rs = nothing
@@ -69,7 +67,7 @@ end if
             do while not rs.eof
         %>
         <tr>
-            <td><a href="columnList.asp?title=<%=rs("name")%>&id=<%=rs("id")%>"><%=rs("name")%></a></td>
+            <td><a href="columnList.asp?title=<%=rs("linkname")%>&id=<%=rs("id")%>"><%=rs("linkname")%></a></td>
             <td><%=rs("setTime")%></td>
             <td><input type="text" id="sort" onBlur="location='?id=<%=rs("id")%>&action=sort&sortID=' + this.value" class="input-sm" value="<%=rs("sort")%>" style="width:60px;"></td>
             <td><a href="column.asp?title=<%=title%>&id=<%=rs("id")%>&action=edit"><span class="glyphicon glyphicon-pencil"></span><a></td>
