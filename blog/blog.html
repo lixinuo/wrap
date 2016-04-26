@@ -36,15 +36,9 @@
                 </a>
             </li>
             <li>
-                <a href="life.html" id="top_current">
-                    <span>生活</span>
-                    <span class="en">Life</span>
-                </a>
-            </li>
-            <li>
-                <a href="../learn/learn.html">
-                    <span>学无止境</span>
-                    <span class="en">Learn</span>
+                <a href="blog.html" id="top_current">
+                    <span>文章</span>
+                    <span class="en">Blog</span>
                 </a>
             </li>
             <li>
@@ -60,17 +54,19 @@
 <div class="sub">
     <div class="sub_title">
         <a href="../index.html" class="a1">网站首页</a>
-        <a href="life.html" class="a2">生活</a>
-        <span>这些曾经或现在，出现在我生命中的人，现在以及以后，或许在，或许不在，但是谢谢，你们给予我的那些温暖。</span>
+        <a href="learn.html" class="a2">学无止境</a>
+        <span>天行健，君子以自强不息！</span>
     </div>
-    <div class="content left"></div>
+    <div class="content left">
+    </div>
+    
     <div class="content_list right">
         <div class="news">
             <h3 class="ranking"><p>栏目<span>列表</span></p></h3>
             <ul class="column_list"></ul>
         </div>
         <p class="height20"></p>
-       <!-- <div class="news">
+        <!--<div class="news">
             <h3 class="ranking"><p>文章<span>排行</span></p></h3>
             <ul class="ranking_list">
                 <li><a href="#">黑色Html5个人博客模板主题《如影随形》</a></li>
@@ -85,7 +81,7 @@
             <ul class="website_list"></ul>
         </div>
     </div>
-	<div id="pageNav" style="float:left; width:735px;"></div>
+    <div id="pageNav" style="float:left; width:735px;"></div>
 </div><!--main结束-->
 <div class="footer">
     <div class="footer_box">
@@ -104,27 +100,26 @@
 </div><!--右侧固定栏目结束-->
 </body>
 <script type="text/javascript">
-var listsize = 6;    //每页显示的记录数
-$(function(){
-	firstLoad();
-	testPage(1);
-});
+var listsize = 5;    //每页显示的记录数
+var blogtype = "";
 function testPage(curPage){
 	$(".content").html(''); 
 	$.ajax({
 		type : 'POST',
 		url : '../ajax/ajax.asp',
-		data : { pass : 'blog', curPage : ''+ curPage +'', listsize : ''+ listsize +'', passtype : '生活', rd : Math.random()},
+		data : { pass : 'blog', curPage : ''+ curPage +'', listsize : ''+ listsize +'', blogtype : ''+ blogtype +'', rd : Math.random()},
 		dataType : 'json',
 		error: function(e){
 			alert(e);	
 		},
 		success: function(data){
+			console.log(data);
 			var html = '';
 			if(data.blogCount == 0){
-				html = '<p>' + '暂无文章' + '</p>'
+				html = '<p style="margin:10px;font-size:14px;font-weight:bold;">' + '暂无文章!' + '</p>'
 				//$(html).appendTo($(".content_main"));   jq1.8以后不兼容
 				$($.parseHTML(html, document, true)).appendTo(".content"); 
+				$("#pageNav").html('');
 			}else{
 				for (var i=data.detail.length-1; i>=0; i--){
 					if(Wrap.compareTime(data.detail[i].upTime, new Date(), 7)){
@@ -151,7 +146,7 @@ function firstLoad(){
 	$.ajax({
 		type : 'POST',
 		url : '../ajax/ajax.asp',
-		data : { pass : 'blog', passtype : '生活', rightCon : '1', rd : Math.random()},
+		data : { pass : 'blog', rightCon : '1', rd : Math.random()},
 		dataType : 'json',
 		error: function(e){
 			alert(e);	
@@ -160,7 +155,7 @@ function firstLoad(){
 			var typeHtml = '';
 			if(data.blogtypes.length){
 				for (var i=0; i<data.blogtypes.length; i++){
-					typeHtml += '<li><a href="#">' + data.blogtypes[i].name + '</a></li>'
+					typeHtml += '<li><a href="javascript:void(0)">' + data.blogtypes[i].name + '</a></li>'
 				}
 				$($.parseHTML(typeHtml, document, true)).appendTo(".column_list");
 			}
@@ -174,6 +169,18 @@ function firstLoad(){
 		}
 	}); 
 }
+$(function(){
+	firstLoad();
+	testPage(1);
+	$(document).on('click', '.column_list li a', function(){
+		$(".column_list li a").each(function(index, element) {
+            $(this).removeClass('list_show');
+        });
+		$(this).addClass('list_show');
+		blogtype = $(this).html();
+		testPage(1);
+	});
 
+});
 </script>
 </html>

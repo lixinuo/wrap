@@ -88,7 +88,7 @@
     border-radius: 5px;
     color: #000;
 }
-.column_list li a:hover {
+.column_list li a:hover, .list_show {
     background-color: #e9783b;
 }
 /*栏目列表*/

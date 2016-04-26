@@ -34,15 +34,9 @@
                 </a>
             </li>
             <li>
-                <a href="life/life.html">
-                    <span>生活</span>
-                    <span class="en">Life</span>
-                </a>
-            </li>
-            <li>
-                <a href="learn/learn.html">
-                    <span>学无止境</span>
-                    <span class="en">Learn</span>
+                <a href="blog/blog.html">
+                    <span>文章</span>
+                    <span class="en">Blog</span>
                 </a>
             </li>
             <li>
@@ -116,12 +110,13 @@ $(function(){
 			alert(e);	
 		},
 		success: function(data){
+			console.log(data);
 			//左侧列表
 			var html = '';
 			//排行列表
 			var rankHtml = '';
 			if(data.blogCount == 0){
-				html = '<p>' + '暂无文章' + '</p>';
+				html = '<p style="margin:10px;font-size:14px;font-weight:bold;">' + '暂无文章!' + '</p>';
 				rankHtml = html;
 				//$(html).appendTo($(".content_main"));   jq1.8以后不兼容
 				$($.parseHTML(html, document, true)).appendTo(".content"); 

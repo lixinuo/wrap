@@ -1,19 +1,18 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <!--#include file="../asp/conn/conn.asp"-->
 <%
-Response.CharSet = "utf-8"
 pass = request("pass")
 
 'ajax获取首页信息
 if pass = "index" then 
 	curPage = request("curPage")  '当前页面 
 	listSize = request("listSize")	'每页显示的记录数
-	noteCount = conn.execute("select count(*) from [blog] where show=1")(0)  '获取总的笔记数量
+	blogCount = conn.execute("select count(*) from [blog] where show=1")(0)  '获取总的笔记数量
 
 	json = "{"
-	json = json&"""noteCount"":""" & noteCount & """"
+	json = json&"""blogCount"":""" & blogCount & """"
 	call getFriendLink()
-	if noteCount<>0 then
+	if blogCount<>0 then
 		call getBlogList()
 	end if
 	json = json&"}"
@@ -54,23 +53,27 @@ end if
 if pass = "blog" then
 	curPage = request("curPage")  '当前页面 
 	listSize = request("listSize")	'每页显示的记录数
-	passtype = request("passtype")  '
+	blogtype = request("blogtype")  '
 	rightCon = request("rightCon")
-	blogCount = conn.execute("select count(*) from [blog],[blogtype] where [blog].categories=[blogtype].typename and [blog].show=1 and [blogtype].supplement='"&passtype&"'")(0)  '获取总的blog数量
+	if blogtype = "" then
+		blogCount = conn.execute("select count(*) from [blog] where show=1 ")(0)  '获取总的blog数量
+	else
+		blogCount = conn.execute("select count(*) from [blog] where show=1 and categories='"&blogtype&"' ")(0)  '获取总的blog数量
+	end if
 	preNum = curPage*listSize   '显示的数量
 	if blogCount<preNum then
 		listSize = blogCount - (curPage-1)*listSize
 	end if
 	
 	json = "{"
-	json = json&"""blogCount"":""" & blogCount & """,""passtype"":""" & passtype & """"
+	json = json&"""blogCount"":""" & blogCount & """"
 	'获取blogtype列表
 	if rightCon=1 then
-		call getBlogType(passtype)
+		call getBlogType()
 		call getFriendLink()
 	end if
 	if blogCount<>0 and curPage<>"" then
-		call getBlog(preNum,listSize,passtype)
+		call getBlog(preNum,listSize,blogtype)
 	end if
 	
 	json = json&"}"
@@ -107,9 +110,13 @@ function getBlogList()
 end function
 
 '获取blog文章
-function getBlog(preNum,listSize,passtype)
+function getBlog(preNum,listSize,blogtype)
 	set rs = server.CreateObject("adodb.recordset")
-	sql = "select top "&listSize&" * from (select top "&preNum&" [blog].id,[blog].blogTitle,[blog].author,[blog].categories,[blog].detail,[blog].upTime from [blog],[blogtype] where [blog].categories=[blogtype].typename and [blog].show=1 and [blogtype].supplement='"&passtype&"' order by [blog].id desc)top_1 order by [top_1].id asc"
+	if blogtype = "" then
+		sql = "select top "&listSize&" * from (select top "&preNum&" * from [blog] where show=1 order by id desc)top_1 order by id asc"
+	else
+		sql = "select top "&listSize&" * from (select top "&preNum&" * from [blog] where show=1 and categories='"&blogtype&"' order by id desc)top_1 order by id asc"
+	end if
 	rs.open sql,conn,1,1
 	json = json&",""detail"":["
 	if not rs.eof then
@@ -143,9 +150,9 @@ function getFriendLink()
 end function
 
 '获取blog类别
-function getBlogType(blogtype)
+function getBlogType()
 	set rs = server.CreateObject("adodb.recordset")
-	sql = "select typename from blogtype where show=1 and supplement = '"&blogtype&"'"
+	sql = "select typename from blogtype where show=1"
 	rs.open sql,conn,1,1
 	json = json&",""blogtypes"":["
 	if not rs.eof then
