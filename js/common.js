@@ -107,11 +107,36 @@ Wrap.quickSort = function(arr){
 //比较当前日期，返回bool值
 Wrap.compareTime = function(date1,date2,num){
 	if(!num){num=7}
-	var date1arr = date1.split("/");
+	date1 = date1.split(" ")[0];
+	var date1arr = date1.split("-");
 	var date1 = new Date(date1arr[0],date1arr[1]-1,(date1arr[2]));  //月份减1
 	date1.setDate(date1.getDate()+num);  //日期加上预设的天数，默认7天
 	return (date1 >= date2);
 }
+
+//格式化时间
+Wrap.datemate = function(oldtime){
+	var time1 = oldtime.split(' ');
+	var newTime = time1[0].split('/');
+	if(newTime[1].length==1){
+		newTime[1] = 0 + newTime[1];
+	}
+	if(newTime[2].length==1){
+		newTime[2] = 0 + newTime[2];
+	}
+	if(time1[1]==undefined){
+		return newTime[0] + '-' + newTime[1] + '-' + newTime[2];
+	}else{
+		return newTime[0] + '-' + newTime[1] + '-' + newTime[2] + ' ' + time1[1];
+	}	
+}
+
+//截取url参数信息
+Wrap.getQueryString = function(name) { 
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return unescape(r[2]); return null; 
+} 
 
 
 

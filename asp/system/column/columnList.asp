@@ -52,7 +52,7 @@ end if
     <thead>
         <tr>
             <td>栏目名称</td>
-            <td>创建日期</td>
+            <td width="20%">创建日期</td>
             <td width="10%">排序</td>
             <td width="10%">编辑</td>
             <td width="10%">删除</td>
@@ -68,7 +68,7 @@ end if
         %>
         <tr>
             <td><a href="columnList.asp?title=<%=rs("linkname")%>&id=<%=rs("id")%>"><%=rs("linkname")%></a></td>
-            <td><%=rs("setTime")%></td>
+            <td><%=datemate(rs("setTime"))%></td>
             <td><input type="text" id="sort" onBlur="location='?id=<%=rs("id")%>&action=sort&sortID=' + this.value" class="input-sm" value="<%=rs("sort")%>" style="width:60px;"></td>
             <td><a href="column.asp?title=<%=title%>&id=<%=rs("id")%>&action=edit"><span class="glyphicon glyphicon-pencil"></span><a></td>
             <td><a onClick="return del()" href="?title=<%=title%>&id=<%=rs("id")%>&action=del"><span class="glyphicon glyphicon-trash"></span><a></td> 

@@ -47,7 +47,7 @@ function datemate(gettime)
 		if len(gethour) = 1 then gethour = "0"&gethour
 		if len(getmin) = 1 then getmin = "0"&getmin
 		if len(getsec) = 1 then getsec = "0"&getsec 
-		datemate = getyear&"-"&getmonth&"-"&getday
+		datemate = getyear&"-"&getmonth&"-"&getday&" "&gethour&":"&getmin&":"&getsec
 	end if
 end function
 

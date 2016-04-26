@@ -4,9 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../css/reset.css" />
     <link rel="stylesheet" type="text/css" href="../css/index.css" />
-    <link rel="stylesheet" type="text/css" href="../css/sub.css" />
+    <link rel="stylesheet" type="text/css" href="../css/sub.css"/>
     <script type="text/javascript" src="../lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/list.js"></script>
     <title>个人主页</title>
 </head>
 <body>
@@ -23,7 +24,7 @@
                 </a>
             </li>
             <li>
-                <a href="about.html" id="top_current">
+                <a href="../about/about.html">
                     <span>关于我</span>
                     <span class="en">About</span>
                 </a>
@@ -35,7 +36,7 @@
                 </a>
             </li>
             <li>
-                <a href="../blog/blog.html">
+                <a href="blog.html" id="top_current">
                     <span>文章</span>
                     <span class="en">Blog</span>
                 </a>
@@ -49,44 +50,20 @@
         </ul>
     </div><!--top_list结束-->
 </div><!--top结束-->
+
 <div class="sub">
     <div class="sub_title">
         <a href="../index.html" class="a1">网站首页</a>
-        <a href="about.html" class="a2">关于我</a>
+        <a href="blog.html" class="a2">文章</a>
         <span>天行健，君子以自强不息！</span>
     </div>
-    <div class="about_main">
-        <h2>Just about me</h2>
-        <span id="selfDetail"></span>
-        <h2>About My Website</h2>
-        <span id="domain"></span>
-        <span id="servers"></span>
-        <span id="upTime"></span>
-        <span id="versions">当前版本：<a href="javascript:void(0)"></a></span>
-        <div id="moreVersion"></div>
-    </div>
-    <div class="about_main_detail">
-        <ul>
-            <li>网名：<span id="netName"></span></li>
-            <li>姓名：<span id="fullName"></span></li>
-            <li>籍贯：<span id="root"></span></li>
-            <li>现居：<span id="living"></span></li>
-            <li>职业：<span id="job"></span></li>
-            <li>
-                <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=Zx8OCRIISQsOJxYWSQQICg" style="text-decoration:none;">
-                    <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_22.png" alt="我的qq邮箱" title="我的qq邮箱"/>
-                </a>
-            </li>
-        </ul>
-
-    </div>
-</div>
-
+    <div class="blog"></div>
+</div><!--sub结束-->
 <div class="footer">
     <div class="footer_box">
         <p>
             Design by lixin,李欣<br/>
-            版权所有 © 李欣 未经许可不得复制、转载或摘编，违者必究!<br/>
+            版权所有@李欣 未经许可不得复制、转载或摘编，违者必究!<br/>
             本网站已运行<span id="runTime"></span>&nbsp;
             <a href="http://www.miitbeian.gov.cn" target="_blank">ICP许可证号 XXXX</a>
         </p>
@@ -99,37 +76,27 @@
 </div><!--右侧固定栏目结束-->
 </body>
 <script type="text/javascript">
-$(function(){
+function firstLoad(){
 	$.ajax({
 		type : 'POST',
 		url : '../ajax/ajax.asp',
-		data : { pass : 'about', rd : Math.random()},
+		data : { pass : 'content', id : Wrap.getQueryString("id"), rd : Math.random()},  //getQueryString获取url中id值
 		dataType : 'json',
-		success : function(data){
-			$("#netName").html(data.netName);
-			$("#fullName").html(data.fullName);
-			$("#root").html(data.root);
-			$("#living").html(data.living);
-			$("#job").html(data.job);
-			$("#selfDetail").html(data.selfDetail);
-			$("#domain").html("域名： " + data.versions[0].domain);
-			$("#servers").html("服务器： " + data.versions[0].servers);
-			$("#upTime").html("上线时间： " + data.versions[0].upTime);
-			$("#versions a").html(" " + data.versions[0].versionss + "(点击查看更多版本信息）");
-			var html = '<div style="border-bottom:1px solid #ccc"></div>'
-			for(var i=0 ; i<data.versions.length ; i++){
-				html = html + '<p><strong>版本号： ' + data.versions[i].versionss + '</strong></p>';
-				html = html + '<p>' + data.versions[i].details + '</p>';
-			}
-			$($.parseHTML(html, document, true)).appendTo("#moreVersion"); 
-			//$(html).appendTo("#moreVersion");
-			console.log(data);
+		error: function(e){
+			alert(e);	
+		},
+		success: function(data){
+			var html = '';
+			html += '<h3>' + data.blogTitle + '</h3>';
+			html += '<div class="blog_time"><span>发布时间：' + data.upTime + '</span>';
+			html += '<span>作者：' + data.author + '</span></div>'
+			html += '<div class="blog_content">' + data.detail + '</div>';
+			$($.parseHTML(html, document, true)).appendTo('.blog');
 		}
-		
-	});
-	$("#versions a").click(function(){
-		$("#moreVersion").toggle('slow');	
-	});
+	}); 
+}
+$(function(){
+	firstLoad();
 });
 </script>
 </html>

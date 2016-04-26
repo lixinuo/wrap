@@ -13,7 +13,7 @@ if actionto = "edit" or actionto = "add" then
 	rs.open sql,conn,1,3
 	if rs.eof then
 		rs.addnew
-		rs("setTime") = datemate(now())
+		rs("setTime") = now()
 		rs("detail") = getStr(detail)
 	else
 		rs("detail") = getStr(detail)

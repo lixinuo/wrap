@@ -17,7 +17,7 @@ if actionto = "edit" or actionto = "add" then
 		rs.addnew
 		rs("username") = userName
 		rs("password") = userPwd
-		rs("setTime") = datemate(now())
+		rs("setTime") = now()
 	else
 		if trim(request.Form("userPwd")) <> "" then
 			rs("username") = userName

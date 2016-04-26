@@ -17,7 +17,7 @@ if actionto = "edit" or actionto = "add" then
 		rs.addnew
 		rs("typename") = Uname
 		rs("supplement") = supplement
-		rs("setTime") = datemate(now())
+		rs("setTime") = now()
 	else
 		rs("typename") = Uname
 		rs("supplement") = supplement

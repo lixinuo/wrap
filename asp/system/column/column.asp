@@ -20,9 +20,10 @@ if actionto = "add" or actionto = "edit" then
 			rs("parentID") = parentID
 			rs("setTime") = now()
 		end if
-		rs("name") = inputName
+		rs("linkname") = inputName
 		rs("linkURL") = linkURL
 		rs("detail") = getStr(detail)
+		rs("setTime") = now()
 	rs.update
 	rs.close
 	set rs = nothing
@@ -32,7 +33,7 @@ if  action = "edit" then
 	set rs = server.CreateObject("adodb.recordset")
 	sql = "select * from [column] where id = "&id&""
 	rs.open sql,conn,1,1
-		inputName = rs("name")
+		inputName = rs("linkname")
 		linkURL = rs("linkURL")
 		detail = rs("detail")
 	rs.close

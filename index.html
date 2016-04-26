@@ -124,11 +124,11 @@ $(function(){
 				maxShow = (maxShow>data.detail.length)?data.detail.length:maxShow
 				for (var i=0; i<maxShow; i++){
 					if(Wrap.compareTime(data.detail[i].upTime, new Date(), 7)){
-						html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';
+						html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle +'</a></h3>';
 					}else{
-						html += '<div class="content_main left">' + '<h3 class="content_title"><a href="#">' + data.detail[i].blogTitle +'</a></h3>';	
+						html += '<div class="content_main left">' + '<h3 class="content_title"><a href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle +'</a></h3>';	
 					}
-					html += '<div class="content_image"></div>';
+					//html += '<div class="content_image"></div>';
 					html += '<div class="content_detail"><p>' + data.detail[i].detail + '</p></div>';
 					html += '<div class="content_time left"><span>' + data.detail[i].upTime + '</span>';
 					html += '<span>作者：' + data.detail[i].author + '</span>';
@@ -140,7 +140,7 @@ $(function(){
 				
 				maxShowList = (maxShowList>data.detail.length)?data.detail.length:maxShowList
 				for (var i=0; i<maxShowList; i++){
-					rankHtml += '<li><a target="_blank" href="#">' + data.detail[i].blogTitle	+ '</a></li>'
+					rankHtml += '<li><a target="_blank" href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle	+ '</a></li>'
 				}
 				$($.parseHTML(rankHtml, document, true)).appendTo(".ranking_list");
 			}

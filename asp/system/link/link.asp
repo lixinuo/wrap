@@ -16,11 +16,11 @@ if actionto = "edit" or actionto = "add" then
 	rs.open sql,conn,1,3
 	if rs.eof then
 		rs.addnew
-		rs("name") = linkName
+		rs("linkname") = linkName
 		rs("url") = linkUrl
-		rs("setTime") = datemate(now())
+		rs("setTime") = now()
 	else
-		rs("name") = linkName
+		rs("linkname") = linkName
 		rs("url") = linkUrl
 	end if
 	rs.update
@@ -33,7 +33,7 @@ set rs = server.CreateObject("adodb.recordset")
 sql = "select * from [link] where id = "&id&""
 rs.open sql,conn,1,1
 if not rs.eof then
-	linkName = rs("name")
+	linkName = rs("linkname")
 	linkUrl = rs("url")
 end if
 rs.close

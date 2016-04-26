@@ -94,7 +94,7 @@ set rs =nothing
                     </div><br>
                     <div class="input-group">
                         <span class="input-group-addon" >时间：</span>
-                        <input type="text" class="form-control" required readonly id="upTime" name="upTime" value="<%if upTime="" then response.Write datemate(now()) else response.Write upTime%>">
+                        <input type="text" class="form-control" required readonly id="upTime" name="upTime" value="<%if upTime="" then response.Write now() else response.Write upTime%>">
                     </div><br>
                     <div class="input-group">
                     	<span class="input-group-addon">分类：</span>

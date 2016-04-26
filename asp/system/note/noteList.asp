@@ -50,7 +50,7 @@ end if
                         <thead>
                             <tr>
                                 <td>内容</td>
-                                <td width="10%">日期</td>
+                                <td width="20%">日期</td>
                                 <td width="10%">状态</td>
                                 <td width="10%">编辑</td>
                                 <td width="10%">删除</td>
@@ -66,7 +66,7 @@ end if
                             %>
                                 <tr>
                                     <td title="<%=rs("detail")%>"><%if len(rs("detail"))>20 then response.Write left(rs("detail"),20)&"..." else response.Write rs("detail")%></td>
-                                    <td><%=rs("setTime")%></td>
+                                    <td><%=datemate(rs("setTime"))%></td>
                                     <td><a href="?action=show&title=<%=title%>&id=<%=rs("id")%>&showList=<%=rs("show")%>" id="showList"><%if rs("show")=1 then response.Write "显示" else response.Write "隐藏"%></a></td>
                                     <td><a href="note.asp?id=<%=rs("id")%>&action=edit&title=<%=title%>"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                     <td><a onClick="return del()" href="?id=<%=rs("id")%>&action=del&title=<%=title%>"><span class="glyphicon glyphicon-trash"></span></a></td>

@@ -147,7 +147,7 @@ set rs =nothing
                         </tr>
                         <tr>
                             <td style="height:34px; line-height:34px;">上线时间：</td>
-                            <td><input type="text"  class="form-control" required readonly id="upTime" name="upTime" value="<%=datemate(upTime)%>"></td>
+                            <td><input type="text"  class="form-control" required readonly id="upTime" name="upTime" value="<%=upTime%>"></td>
                         </tr>
                         <tr>
                             <td style="height:34px; line-height:34px;">版本号：</td>

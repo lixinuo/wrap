@@ -80,6 +80,17 @@ if pass = "blog" then
 	response.Write json
 end if
 
+'blog具体内容ajax返回
+if pass = "content" then
+	id = request("id")  '当前页面 
+	json = "{"
+	'blog具体内容
+	call getBlogMes(id)
+	json = json&"}"
+	'返回前台json数据
+	response.Write json
+end if
+
 '留言板页面ajax返回
 if pass = "guest" then
 	json = "{"
@@ -92,6 +103,18 @@ if pass = "guest" then
 end if
 
 '获取blog文章
+function getBlogMes(id)
+	set rs = server.CreateObject("adodb.recordset")
+	sql = "select * from [blog] where id="&id&""
+	rs.open sql,conn,1,1
+	if not rs.eof then
+		json = json&"""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """"
+	end if
+	rs.close
+	set rs=nothing	
+end function
+
+'获取blog文章列表
 function getBlogList()
 	set rs = server.CreateObject("adodb.recordset")
 	sql = "select top 10 * from [blog] where show=1 order by upTime desc,id desc"
@@ -99,7 +122,7 @@ function getBlogList()
 	json = json&",""detail"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & rs("upTime") & """,""id"":""" & rs("id") & """},"
+			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，
@@ -121,7 +144,7 @@ function getBlog(preNum,listSize,blogtype)
 	json = json&",""detail"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & rs("upTime") & """,""id"":""" & rs("id") & """},"
+			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，
@@ -175,7 +198,7 @@ function getNoteList(preNum,listSize)
 	json = json&",""detail"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""details"":""" & rs("detail") & """,""setTimes"":""" & rs("setTime") & """,""id"":""" & rs("id") & """},"
+			json = json&"{""details"":""" & rs("detail") & """,""setTimes"":""" & datemate(rs("setTime")) & """,""id"":""" & rs("id") & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，

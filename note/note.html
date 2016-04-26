@@ -97,7 +97,7 @@ function testPage(curPage){
 			var html = '';
 			if(data.noteCount != 0){
 				for (var i=data.detail.length-1; i>=0 ;i--){
-					html += '<li class="note_box"><p>' + data.detail[i].details + '</p><span>' +  data.detail[i].setTimes + '</span></li>'
+					html += '<li class="note_box"><p>' + data.detail[i].details + '</p><span>' +  data.detail[i].setTimes.split(" ")[0] + '</span></li>'
 				}
 			}else{
 				html += '<p style="margin:10px;font-size:14px;font-weight:bold;">' + '暂无笔记！' + '</p>'	

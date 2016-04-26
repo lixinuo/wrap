@@ -71,7 +71,7 @@ end if
                             %>
                                 <tr>
                                     <td title="<%=rs("linkname")%>"><a href="<%=rs("url")%>" target="_blank"><%=rs("linkname")%></a></td>
-                                    <td><%=rs("setTime")%></td>
+                                    <td><%=datemate(rs("setTime"))%></td>
                                     <td><a href="?action=show&title=<%=title%>&id=<%=rs("id")%>&showList=<%=rs("show")%>" id="showList"><%if rs("show")=1 then response.Write "显示" else response.Write "隐藏"%></a></td>
                                     <td><input type="text" class="input-sm" style="width:60px;" onBlur="location='?action=sort&id=<%=rs("id")%>&sortID=' + this.value" value="<%=rs("sort")%>"></td>
                                     <td><a href="link.asp?id=<%=rs("id")%>&action=edit&title=<%=title%>"><span class="glyphicon glyphicon-pencil"></span></a></td>

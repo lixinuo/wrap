@@ -65,7 +65,7 @@ end if
                             %>
                                 <tr>
                                     <td title="<%=rs("username")%>"><%=rs("username")%></td>
-                                    <td><%=rs("setTime")%></td>
+                                    <td><%=datemate(rs("setTime"))%></td>
                                     <td><a href="?action=show&title=<%=title%>&id=<%=rs("id")%>&showList=<%=rs("show")%>" id="showList"><%if rs("show")=1 then response.Write "显示" else response.Write "隐藏"%></a></td>
                                     <td><a href="user.asp?id=<%=rs("id")%>&action=edit&title=<%=title%>"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                     <td><a onClick="return del()" href="?id=<%=rs("id")%>&action=del&title=<%=title%>"><span class="glyphicon glyphicon-trash"></span></a></td>
