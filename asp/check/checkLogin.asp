@@ -13,7 +13,7 @@ sql = "select id,username,password from [user] where username = '"&userName&"'"
 rs.open sql,conn,1,1
 if not rs.eof then
 	if rs("password") <> userPwd then
-		msg "密码错误!","../login.asp"
+		msg "密码错误!","../index.asp"
 	else
 		Session("lastLoginTime") = now()
 		Session("username") = userName

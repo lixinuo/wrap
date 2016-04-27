@@ -1,6 +1,8 @@
 <%@LANGUAGE="VBSCRIPT" CODEPAGE="65001"%>
 <!--#include file="../asp/conn/conn.asp"-->
 <%
+Response.CharSet = "utf-8"
+Session.CodePage = "65001"
 pass = request("pass")
 
 'ajax获取首页信息
@@ -83,6 +85,7 @@ end if
 'blog具体内容ajax返回
 if pass = "content" then
 	id = request("id")  '当前页面 
+	conn.execute("update blog set views=(views+1) where id = "&id&"")
 	json = "{"
 	'blog具体内容
 	call getBlogMes(id)
@@ -108,7 +111,7 @@ function getBlogMes(id)
 	sql = "select * from [blog] where id="&id&""
 	rs.open sql,conn,1,1
 	if not rs.eof then
-		json = json&"""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """"
+		json = json&"""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & replace(rs("detail"),chr(34),"'") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """,""views"":""" & rs("views") & """"
 	end if
 	rs.close
 	set rs=nothing	
@@ -122,7 +125,7 @@ function getBlogList()
 	json = json&",""detail"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """},"
+			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & replace(rs("detail"),chr(34),"'") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """,""views"":""" & rs("views") & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，
@@ -144,7 +147,7 @@ function getBlog(preNum,listSize,blogtype)
 	json = json&",""detail"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & rs("detail") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """},"
+			json = json&"{""blogTitle"":""" & rs("blogTitle") & """,""author"":""" & rs("author") & """,""categories"":""" & rs("categories") & """,""detail"":""" & replace(rs("detail"),chr(34),"'") & """,""upTime"":""" & datemate(rs("upTime")) & """,""id"":""" & rs("id") & """,""views"":""" & rs("views") & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，
@@ -198,7 +201,7 @@ function getNoteList(preNum,listSize)
 	json = json&",""detail"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""details"":""" & rs("detail") & """,""setTimes"":""" & datemate(rs("setTime")) & """,""id"":""" & rs("id") & """},"
+			json = json&"{""details"":""" & replace(rs("detail"),chr(34),"'") & """,""setTimes"":""" & datemate(rs("setTime")) & """,""id"":""" & rs("id") & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，
@@ -216,7 +219,7 @@ function getConfigure()
 	json = json&"""versions"":["
 	if not rs.eof then
 		do while not rs.eof 
-			json = json&"{""versionss"":""" & rs("versions") & """,""details"":""" & rs("detail") & """,""domain"":""" & rs("domain") & """,""servers"":""" & rs("servers") & """,""upTime"":""" & datemate(rs("upTime")) & """},"
+			json = json&"{""versionss"":""" & rs("versions") & """,""details"":""" & replace(rs("detail"),chr(34),"'") & """,""domain"":""" & rs("domain") & """,""servers"":""" & rs("servers") & """,""upTime"":""" & datemate(rs("upTime")) & """},"
 		rs.movenext
 		loop
 		json = left(json,len(json)-1)  '去掉最后一个，
@@ -237,7 +240,7 @@ function getSelfMes()
 			root = rs("root")
 			living = rs("living")
 			job = rs("job")
-			selfDetail = rs("detail")
+			selfDetail = replace(rs("detail"),chr(34),"'")
 		end if
 	rs.close
 	set rs = nothing

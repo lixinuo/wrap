@@ -24,14 +24,14 @@ if actionto = "edit" or actionto = "add" then
 		rs("upTime") = upTime
 		rs("categories") = categories
 		'rs("inputFile") = inputFile
-		rs("detail") = getStr(detail)
+		rs("detail") = detail
 	else
 		rs("blogTitle") = blogTitle
 		rs("author") = author
 		rs("upTime") = upTime
 		rs("categories") = categories
 		'rs("inputFile") = inputFile
-		rs("detail") = getStr(detail)
+		rs("detail") = detail
 	end if
 	rs.update
 	rs.close
@@ -71,6 +71,12 @@ set rs =nothing
 <script type="text/javascript" src="../../bootstrap-3.3.5/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="../../js/choseTime.js"></script>
 <script type="text/javascript" src="../../js/public.js"></script>
+<script type="text/javascript" src="../../richTextBox/ueditor.config.js"></script>
+<script type="text/javascript" src="../../richTextBox/ueditor.all.min.js"></script>
+<script type="text/javascript" src="../../richTextBox/lang/zh-cn/zh-cn.js"></script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+
 <title><%=title%></title>
 </head>
 <body>
@@ -116,7 +122,7 @@ set rs =nothing
                         <span class="input-group-addon" >文件：</span>
                         <input type="file" class="form-control" multiple id="inputFile" name="inputFile">
                     </div><br>-->
-                    <textarea class="form-control" rows="10" required id="detail" name="detail"><%=getFxStr(detail)%></textarea>
+                    <script id="editor" name="detail" type="text/plain" style="width:100%;height:400px;"><%=detail%></script>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-1">
@@ -128,4 +134,9 @@ set rs =nothing
     </div>
 </form>
 </body>
+<script type="text/javascript">
+	//实例化编辑器
+	//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+	var ue = UE.getEditor('editor');
+</script>
 </html>

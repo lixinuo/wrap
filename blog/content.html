@@ -76,6 +76,11 @@
 </div><!--右侧固定栏目结束-->
 </body>
 <script type="text/javascript">
+$(function(){
+	firstLoad();
+});
+//每次进页面浏览次数+1
+//ajax获取信息
 function firstLoad(){
 	$.ajax({
 		type : 'POST',
@@ -83,9 +88,10 @@ function firstLoad(){
 		data : { pass : 'content', id : Wrap.getQueryString("id"), rd : Math.random()},  //getQueryString获取url中id值
 		dataType : 'json',
 		error: function(e){
-			alert(e);	
+			console.log(e);
 		},
 		success: function(data){
+			console.log(data);
 			var html = '';
 			html += '<h3>' + data.blogTitle + '</h3>';
 			html += '<div class="blog_time"><span>发布时间：' + data.upTime + '</span>';
@@ -95,8 +101,5 @@ function firstLoad(){
 		}
 	}); 
 }
-$(function(){
-	firstLoad();
-});
 </script>
 </html>
