@@ -57,24 +57,9 @@
         <span>你，生命中最重要的过客，之所以是过客，因为你未曾为我停留。</span>
     </div>
     <div class="content left">
-		<!-- 多说评论框 start -->
-        <div class="ds-thread" id="ds-thread" data-thread-key="" data-title="" data-url=""></div>
-        
-        <!-- 多说评论框 end -->
-        <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-		<script type="text/javascript">
-        var duoshuoQuery = {short_name:"lixinnuo"};
-        (function() {
-            var ds = document.createElement('script');
-            ds.type = 'text/javascript';ds.async = true;
-            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-            ds.charset = 'UTF-8';
-            (document.getElementsByTagName('head')[0] 
-             || document.getElementsByTagName('body')[0]).appendChild(ds);
-        })();
-        </script>
-		<!-- 多说公共JS代码 end -->
+
     </div>
+
     <div class="about_main_detail">
         <ul>
             <li>网名：<span id="netName"></span></li>
@@ -110,7 +95,7 @@
 </body>
 <script type="text/javascript">
 $(function(){
-	firstLoad();
+	firstLoad();	
 });
 function firstLoad(){
 	$.ajax({
@@ -128,11 +113,6 @@ function firstLoad(){
 			$("#root").html(data.root);
 			$("#living").html(data.living);
 			$("#job").html(data.job);
-			$("#ds-thread").attr({
-				'data-thread-key' : '100000000',
-				'data-title' : 'lixin留言板',
-				'data-url' : window.location.href	
-			});
 		}
 	}); 
 }
