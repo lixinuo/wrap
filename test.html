@@ -2,19 +2,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml">  
 <head>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<title>ajax分页</title>  
+<title>ajax分页</title> 
+<style>
+.classB{ color:red;}
+.classA{ color:blue;}
+</style> 
 </head>
 <body>
-<div id="pageNav"></div>  
+<div class="classA classB ">123123</div>  
 </body>  
   
 </html>  
-<script>  
-var test = "global";
+<script type="text/javascript">  
+var a = new Object();
+a.value = 1;
+b = a;
+b.value = 2;
+console.log(a.value);  //2
+
+var foo = 3;
 function f(){
-	console.log(test);	
-	var test = 'local';
-	console.log(test);
+	console.log(foo);  //undefined
+	var foo = 4;
+	console.log(foo);	//2
 }
 f();
+
+var User = {
+	count : 1,
+	getCount : function(){
+		return this.count;	
+	}	
+}
+console.log(User.getCount());  //1
+var func = User.getCount();
+console.log(func); //1
+
+for(var i = 1;i<=3;i++){
+	setTimeout(function(){
+		console.log(i);	
+	},0);	
+}  //444
+
 </script>  

@@ -113,18 +113,17 @@ function firstLoad(){
 			console.log(e);
 		},
 		success: function(data){
-			console.log(data);
+			$("#ds-thread").attr({
+				'data-thread-key' : Wrap.getQueryString("id"),
+				'data-title' : data.blogTitle,
+				'data-url' : window.location.href	
+			});
 			var html = '';
 			html += '<h3>' + data.blogTitle + '</h3>';
 			html += '<div class="blog_time"><span>发布时间：' + data.upTime + '</span>';
 			html += '<span>作者：' + data.author + '</span></div>'
 			html += '<div class="blog_content">' + data.detail + '</div>';
 			$($.parseHTML(html, document, true)).appendTo('.blog');
-			$("#ds-thread").attr({
-				'data-thread-key' : Wrap.getQueryString("id"),
-				'data-title' : data.blogTitle,
-				'data-url' : window.location.href	
-			});
 		}
 	}); 
 }

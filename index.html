@@ -121,7 +121,7 @@ $(function(){
 				//$(html).appendTo($(".content_main"));   jq1.8以后不兼容
 				$($.parseHTML(html, document, true)).appendTo(".content"); 
 			}else{
-				maxShow = (maxShow>data.detail.length)?data.detail.length:maxShow
+				maxShow = (maxShow>data.detail.length)?data.detail.length:maxShow;
 				for (var i=0; i<maxShow; i++){
 					if(Wrap.compareTime(data.detail[i].upTime, new Date(), 7)){
 						html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle +'</a></h3>';
@@ -132,13 +132,13 @@ $(function(){
 					html += '<div class="content_detail"><p>' + data.detail[i].detail.split("><p")[0] + '</p></div>';
 					html += '<div class="content_time left"><span>' + data.detail[i].upTime + '</span>';
 					html += '<span>作者：' + data.detail[i].author + '</span>';
-					html += '<span>个人博客：' + data.detail[i].categories + '</span>';
+					html += '<span>分类：' + data.detail[i].categories + '</span>';
 					html += '<span>阅览：[' + data.detail[i].views + ']</span></div>';
 					html += '</div>';
 				}
 				$($.parseHTML(html, document, true)).appendTo(".content");
 				
-				maxShowList = (maxShowList>data.detail.length)?data.detail.length:maxShowList
+				maxShowList = (maxShowList>data.detail.length)?data.detail.length:maxShowList;
 				for (var i=0; i<maxShowList; i++){
 					rankHtml += '<li><a target="_blank" href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle	+ '</a></li>'
 				}

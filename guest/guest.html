@@ -110,6 +110,11 @@
 </body>
 <script type="text/javascript">
 $(function(){
+	$("#ds-thread").attr({
+		'data-thread-key' : '100000000',
+		'data-title' : 'lixin留言板',
+		'data-url' : window.location.href	
+	});
 	firstLoad();
 });
 function firstLoad(){
@@ -128,11 +133,6 @@ function firstLoad(){
 			$("#root").html(data.root);
 			$("#living").html(data.living);
 			$("#job").html(data.job);
-			$("#ds-thread").attr({
-				'data-thread-key' : '100000000',
-				'data-title' : 'lixin留言板',
-				'data-url' : window.location.href	
-			});
 		}
 	}); 
 }
