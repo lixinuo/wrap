@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="../css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../css/sub.css"/>
+    <script type="text/javascript" src="../lib/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/list.js"></script>
+    <title>个人主页</title>
+</head>
+<body>
+<div class="top">
+    <div class="log">
+        <a href="#"><img src="../images/log.gif" alt=""/></a>
+    </div><!--log结束-->
+    <div class="top_list">
+        <ul>
+            <li>
+                <a href="../index.html" id="top_current">
+                    <span>首页</span>
+                    <span class="en">Protal</span>
+                </a>
+            </li>
+            <li>
+                <a href="../about/about.html">
+                    <span>关于我</span>
+                    <span class="en">About</span>
+                </a>
+            </li>
+            <li>
+                <a href="../note/note.html">
+                    <span>笔记</span>
+                    <span class="en">Note</span>
+                </a>
+            </li>
+            <li>
+                <a href="../blog/blog.html">
+                    <span>文章</span>
+                    <span class="en">Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="../guest/guest.html">
+                    <span>留言板</span>
+                    <span class="en">Guestbook</span>
+                </a>
+            </li>
+        </ul>
+    </div><!--top_list结束-->
+</div><!--top结束-->
+
+<div class="sub">
+    <div class="sub_title">
+        <a href="../index.html" class="a1">网站首页</a>
+        <a href="applyLink.html" class="a2">申请链接</a>
+        <span>有朋自远方来，不亦说乎。</span>
+    </div>
+    <div class="apply">
+    	<h3>友链申请</h3>
+        <p>请仔细阅读以下注意事项后，再填写申请信息！ </p>
+        <ul class="apply_show">
+        	<li>1.欢迎同类站点交换友情链接；</li>
+            <li>2.提交链接前请确认您的网站没有违反中华 人民共和国各项法律、法规的内容；</li>
+            <li>3.我会定期检查链接，如果发现贵站取消本博客的链接，我会取消友链；</li>
+            <li>4.成为友情链接的博客，希望可以保持内容更新和互访；</li>
+            <li>5.对于长期无更新、无法访问和缺少联系的博客，我有权终止其友情链接；</li>
+            <li>6.博客所有友链排列顺序按照申请的时间排序，请不要刻意要求排名顺序；</li>
+        </ul>
+        <ul class="apply_input">
+        	<li>
+            	<label>网站名称：</label>
+                <input type="text" id="webName" placeholder="您的网站名称"  />
+            </li>
+            <li>
+            	<label>申请网址：</label>
+                <input type="text" id="webURL" placeholder="您的网站首页url（包含http://）"  />
+            </li>
+            <li>
+            	<label>站长邮箱：</label>
+                <input type="text" id="webEmail" placeholder="您的联系邮箱"  />
+            </li>
+            <li>
+            	<label>您的留言：</label>
+                <input type="text" id="webDetail" placeholder="备注，可不填"  />
+            </li>
+        </ul>
+        <input type="button" id="link_sub" value="提交申请" />
+        
+    </div>
+</div><!--main结束-->
+<div class="footer">
+    <div class="footer_box">
+        <p>
+            Design by lixin,李欣<br/>
+            版权所有 © 李欣 未经许可不得复制、转载或摘编，违者必究!<br/>
+            本网站已运行<span id="runTime"></span>&nbsp;
+            <a href="http://www.miitbeian.gov.cn" target="_blank">ICP许可证号 XXXX</a>
+        </p>
+    </div>
+</div><!--footer结束-->
+<div id="right_box">
+    <div id="weiXin_pic"><img src="../images/weiXin3.png" alt="微信二维码"/></div>
+    <div id="back_to_head"></div>
+    <div id="weiXin"></div>
+</div><!--右侧固定栏目结束-->
+</body>
+<script type="text/javascript">
+$(function(){
+	$(document).on('click' , '#link_sub' , function(){
+		if($("#webName").val()==""||$("#webURL").val()==""||$("#webEmail").val()==""){
+			alert("网址名称、申请网址、站长邮箱不能为空！");
+		}else{
+			addLink();	
+		}
+	});
+	
+});
+function addLink(){
+	$.ajax({
+		type : 'POST',
+		url : '../ajax/ajax.asp',
+		data : { pass : 'addLink', webName : $("#webName").val(), webURL : $("#webURL").val(), webEmail : $("#webEmail").val(), webDetail : $("#webDetail").val(),  rd : Math.random()},
+		//dataType : 'json',
+		error: function(e){
+			alert(e);	
+		},
+		success: function(data){
+			alert("添加成功！");
+			window.history.back();
+		}
+	}); 
+}
+</script>
+</html>

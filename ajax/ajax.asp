@@ -21,6 +21,29 @@ if pass = "index" then
 	response.Write json
 end if
 
+if pass = "addLink" then
+	webName = request("webName")
+	webURL = request("webURL")
+	webEmail = request("webEmail")
+	webDetail = request("webDetail")
+	set rs = server.CreateObject("adodb.recordset")
+	sql = "select * from [link] where id=0"
+	rs.open sql,conn,1,3
+	if rs.eof then
+		rs.addnew
+		rs("linkname") = webName
+		rs("url") = webURL
+		rs("linkEmail") = webEmail
+		rs("detail") = webDetail
+		rs("setTime") = now()
+		rs("show") = 0
+		rs.update
+	end if
+	rs.close
+	set rs=nothing	
+
+end if
+
 '关于我页面ajax返回
 if pass = "about" then
 	json = "{"

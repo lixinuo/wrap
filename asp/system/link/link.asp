@@ -11,6 +11,8 @@ actionto = request("actionto")
 if actionto = "edit" or actionto = "add" then
 	linkName = trim(request.Form("linkName"))
 	linkUrl = trim(request.Form("linkUrl"))
+	linkEmail = trim(request.Form("linkEmail"))
+	detail = trim(request.Form("detail"))
 	set rs = server.CreateObject("adodb.recordset")
 	sql = "select * from [link] where id = "&id&""
 	rs.open sql,conn,1,3
@@ -18,10 +20,14 @@ if actionto = "edit" or actionto = "add" then
 		rs.addnew
 		rs("linkname") = linkName
 		rs("url") = linkUrl
+		rs("linkEmail") = linkEmail
+		rs("detail") = detail
 		rs("setTime") = now()
 	else
 		rs("linkname") = linkName
 		rs("url") = linkUrl
+		rs("linkEmail") = linkEmail
+		rs("detail") = detail
 	end if
 	rs.update
 	rs.close
@@ -35,6 +41,8 @@ rs.open sql,conn,1,1
 if not rs.eof then
 	linkName = rs("linkname")
 	linkUrl = rs("url")
+	detail = rs("detail")
+	linkEmail = rs("linkEmail")
 end if
 rs.close
 set rs =nothing
@@ -64,11 +72,20 @@ set rs =nothing
             <div class="panel-body">
                 <div class="input-group">
                     <span class="input-group-addon">链接名字：</span>
-                    <input type="text" class="form-control" id="linkName" name="linkName" value="<%=linkName%>">
+                    <input type="text" class="form-control" required id="linkName" name="linkName" value="<%=linkName%>">
                 </div><br>
                 <div class="input-group">
                     <span class="input-group-addon">链接地址：</span>
-                    <input type="text" class="form-control" id="linkUrl" name="linkUrl" value="<%=linkUrl%>">
+                    <input type="text" class="form-control" required id="linkUrl" name="linkUrl" value="<%=linkUrl%>">
+                </div><br>
+                <div class="input-group">
+                    <span class="input-group-addon">联系邮箱：</span>
+                    <input type="text" class="form-control" id="linkEmail" name="linkEmail" value="<%=linkEmail%>">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">备注说明：</span>
+                    <input type="text" class="form-control" id="detail" name="detail" value="<%=detail%>">
                 </div>
             </div>
             <div class="form-group">
