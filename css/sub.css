@@ -149,9 +149,9 @@
 
 /*申请友情链接*/
 .apply { margin:20px 0; padding:20px; border:1px #ccc solid;}
-.apply h3 { padding:20px 0;font-size:24px; font-weight:normal; border-bottom:1px #ccc solid; text-align:center;}
-.apply p { padding: 20px 0; height:24px; line-height:24px;}
-.apply_show li { height:24px; line-height:24px;}
+.apply h3 { padding:20px 0;font-size:24px; font-weight:normal; color:red; border-bottom:1px #ccc solid; text-align:center;}
+.apply p { padding: 10px 0; height:24px; line-height:24px;}
+.apply_show li { height:24px; line-height:24px; padding-left:15px;}
 .apply_input li { padding:10px; }
 .apply_input li label { width:45px; padding:5px;}
 .apply_input li input { width:340px; padding:5px; border-radius:5px; margin-left:15px; height:18px;}

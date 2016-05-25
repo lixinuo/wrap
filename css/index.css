@@ -25,6 +25,9 @@
 .top_list li a {
     color: #333;
 }
+.top_list li a:hover {
+	cursor: pointer;
+}
 .top_list span{
     display: block;
     z-index: 2;
@@ -42,13 +45,13 @@
     -moz-transform: translateY(-100%);
 
 }
-.top_list a:hover .en, .top_list a:hover .en{
+.top_list a:hover .en{
     opacity: 1;
     transform: translateY(0);
     -webkit-transform: translateY(0);
     -moz-transform: translateY(0);
 }
-#top_current{
+.top_current{
     color: #e15782;
 }
 /*top结束*/
