@@ -6,41 +6,41 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <title>个人主页</title>
+    <title>李欣的博客</title>
 </head>
 <body>
 <div class="top">
     <div class="log">
-        <a href="#"><img src="images/log.gif" alt=""/></a>
+        <a href="/"><img src="images/log.gif" alt=""/></a>
     </div><!--log结束-->
     <div class="top_list">
-        <ul>
+        <ul id="nav">
             <li>
-                <a href="#" id="top_current">
-                    <span>首页</span>
+                <a url="home.html">
+                    <span class="top_current">首页</span>
                     <span class="en">Protal</span>
                 </a>
             </li>
             <li>
-                <a href="about/about.html">
+                <a url="about/about.html">
                     <span>关于我</span>
                     <span class="en">About</span>
                 </a>
             </li>
             <li>
-                <a href="note/note.html">
+                <a url="note/note.html">
                     <span>笔记</span>
                     <span class="en">Note</span>
                 </a>
             </li>
             <li>
-                <a href="blog/blog.html">
+                <a url="blog/blog.html">
                     <span>文章</span>
                     <span class="en">Blog</span>
                 </a>
             </li>
             <li>
-                <a href="guest/guest.html">
+                <a url="guest/guest.html">
                     <span>留言板</span>
                     <span class="en">Guestbook</span>
                 </a>
@@ -48,40 +48,7 @@
         </ul>
     </div><!--top_list结束-->
 </div><!--top结束-->
-<div class="banner">
-    <div class="banner_box">
-        <ul class="text">
-            <li>决心是成功的开始。</li>
-            <li>用爱心来做事，用感恩的心做人。</li>
-            <li>成功者学习别人的经验，一般人学习自己的经验。</li>
-        </ul>
-        <div class="portrait">
-            <a href="#">
-                <span>李欣</span>
-            </a>
-        </div>
-    </div>
-</div><!--banner结束-->
-<div class="main">
-    <h2 class="main_title"><p>文章<span>推荐</span></p></h2>
-    <div class="content left">
-    </div>
-
-    <div class="content_list right">
-        <div class="weather">
-            <iframe width="250" scrolling="no" height="60" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&amp;id=12&amp;icon=1&amp;num=1"></iframe>
-        </div>
-        <div class="news">
-            <h3 class="ranking"><p>文章<span>排行</span></p></h3>
-            <ul class="ranking_list"></ul>
-        </div>
-        <div class="news">
-            <h3 class="links"><p>友情<span>链接</span></p></h3>
-            <ul class="website_list"></ul>
-            <a class="apply_link" href="apply/applyLink.html">【申请友情链接】</a>
-        </div>
-    </div>
-
+<iframe src="home.html" id="index" width="100%" scrolling="no" frameborder="0" marginheight="0" marginwidth="0"></iframe>
 </div><!--main结束-->
 <div class="footer">
     <div class="footer_box">
@@ -100,62 +67,28 @@
 </div><!--右侧固定栏目结束-->
 </body>
 <script type="text/javascript">
-var maxShow = 5, maxShowList = 10;
+function reinitIframe(){  
+	var iframe = document.getElementById("index");  
+	try{  
+		var bHeight = iframe.contentWindow.document.body.scrollHeight;  
+		var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;  
+		var height = Math.max(bHeight, dHeight);  
+		iframe.height =  height;  
+	}catch (ex){}  
+}  
 $(function(){
-	$.ajax({
-		type : 'POST',
-		url : 'ajax/ajax.asp',
-		data : { pass : 'index', rd : Math.random()},
-		dataType : 'json',
-		error: function(e){
-			alert(e);	
-		},
-		success: function(data){
-			//console.log(data);
-			//左侧列表
-			var html = '';
-			//排行列表
-			var rankHtml = '';
-			if(data.blogCount == 0){
-				html = '<p style="margin:10px;font-size:14px;font-weight:bold;">' + '暂无文章!' + '</p>';
-				rankHtml = html;
-				//$(html).appendTo($(".content_main"));   jq1.8以后不兼容
-				$($.parseHTML(html, document, true)).appendTo(".content"); 
-			}else{
-				maxShow = (maxShow>data.detail.length)?data.detail.length:maxShow;
-				for (var i=0; i<maxShow; i++){
-					if(Wrap.compareTime(data.detail[i].upTime, new Date(), 7)){
-						html += '<div class="content_main left">' + '<h3 class="content_title new"><a href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle +'</a></h3>';
-					}else{
-						html += '<div class="content_main left">' + '<h3 class="content_title"><a href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle +'</a></h3>';	
-					}
-					//html += '<div class="content_image"></div>';
-					html += '<div class="content_detail"><p>' + data.detail[i].detail.split("><p")[0] + '</p></div>';
-					html += '<div class="content_time left"><span>' + data.detail[i].upTime + '</span>';
-					html += '<span>作者：' + data.detail[i].author + '</span>';
-					html += '<span>分类：' + data.detail[i].categories + '</span>';
-					html += '<span>阅览：[' + data.detail[i].views + ']</span></div>';
-					html += '</div>';
-				}
-				$($.parseHTML(html, document, true)).appendTo(".content");
-				
-				maxShowList = (maxShowList>data.detail.length)?data.detail.length:maxShowList;
-				for (var i=0; i<maxShowList; i++){
-					rankHtml += '<li><a target="_blank" href="../blog/content.html?id='+ data.detail[i].id +'">' + data.detail[i].blogTitle	+ '</a></li>'
-				}
-				$($.parseHTML(rankHtml, document, true)).appendTo(".ranking_list");
-			}
-
-			//友情链接
-			var linkHtml = '';
-			if (data.friendlinks.length){
-				for (var i=0; i<data.friendlinks.length; i++){
-					linkHtml += '<li><a target="_blank" href="'+ data.friendlinks[i].linkurl +'">' + data.friendlinks[i].linkname	+ '</a></li>'
-				}
-				$($.parseHTML(linkHtml, document, true)).appendTo(".website_list");
-			}
+	setInterval("reinitIframe()", 200); 
+	$('#nav li a').on('click', function(){
+		var liList = $('#nav li').length;
+		for(var i=0; i<liList; i++){
+			$('#nav li a span:first-child').removeClass('top_current');	
 		}
+		$(this).find('span:first-child').addClass('top_current');
+		$('#index').attr('src',$(this).attr('url'));
+		//alert($(this).attr('url'));
+			
 	});
+	
 });
 </script>
 </html>
